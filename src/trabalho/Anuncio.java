@@ -67,7 +67,7 @@ public class Anuncio implements Avaliavel{
     }
 
     @Override
-    public String toString() {
+    public java.lang.String toString() {
         return "Anuncio [titulo=" + titulo + ", descricao=" + descricao + ", diaria=" + diaria + ", propriedade="
                 + propriedade + ", qntReservas=" + qntReservas + ", datasLivres=" + datasLivres + "]";
     }
@@ -78,7 +78,7 @@ public class Anuncio implements Avaliavel{
     }
     
 
-    public String exibirReserva(){
+    public java.lang.String exibirReserva(){
     	return "";
         
    }

@@ -46,7 +46,7 @@ public class Reserva {
     }
 
     @Override
-    public String toString() {
+    public java.lang.String toString() {
         return "Reserva [dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", qntHospedes=" + qntHospedes
                 + ", custo=" + custo + "]";
     }

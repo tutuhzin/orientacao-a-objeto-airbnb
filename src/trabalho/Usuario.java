@@ -35,7 +35,7 @@ public class Usuario implements Avaliavel{
     }
 
     @Override
-    public String toString() {
+    public java.lang.String toString() {
         return "Usuario [nome=" + nome + ", email=" + email + ", telefone=" + telefone + "]";
     }
 
