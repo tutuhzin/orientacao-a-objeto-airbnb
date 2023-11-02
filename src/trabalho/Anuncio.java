@@ -1,6 +1,6 @@
 package trabalho;
 
-public class Anuncio implements Avaliavel{
+public class Anuncio {
     private String titulo;
     private String descricao;
     private double diaria;
@@ -80,7 +80,6 @@ public class Anuncio implements Avaliavel{
 
     public java.lang.String exibirReserva(){
     	return "";
-        
    }
 
 

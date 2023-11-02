@@ -1,19 +1,23 @@
 package trabalho;
 
 public class Proprietario extends Usuario{
-    private String listaImoveis [];
+    private Imovel listaImoveis[];
+    private int numImoveis;
 
-    public Proprietario(String nome, String email, String telefone, double nota, String[] listaImoveis) {
+    public Proprietario(String nome, String email, String telefone, double nota) {
         super(nome, email, telefone);
-        this.listaImoveis = listaImoveis;
+        listaImoveis = new Imovel[100];
+        numImoveis = 0;
     }
-
-    public String getListaImoveis() {
-        return listaImoveis[0];
-    }
-
-    public void setListaImoveis(String[] listaImoveis) {
-        this.listaImoveis = listaImoveis;
+   
+    
+    public void addImovel(Imovel i) {
+    	listaImoveis[numImoveis] = i;
+    	numImoveis++;
+    	
     }
     
+    public void preencherDadosAleatoriosImoveis() {
+    	
+    }
 }
