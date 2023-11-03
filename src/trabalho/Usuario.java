@@ -1,4 +1,5 @@
 package trabalho;
+
 public class Usuario implements Avaliavel{
     protected String nome;
     protected String email;
@@ -38,7 +39,5 @@ public class Usuario implements Avaliavel{
     public java.lang.String toString() {
         return "Usuario [nome=" + nome + ", email=" + email + ", telefone=" + telefone + "]";
     }
-
-    
     
 }

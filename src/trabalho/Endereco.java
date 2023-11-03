@@ -1,4 +1,5 @@
 package trabalho;
+
 public class Endereco {
     private String pais;
     private String cidade;
@@ -43,8 +44,5 @@ public class Endereco {
     public void setCep(String cep) {
         this.cep = cep;
     }
-
-    
-    
     
 }
