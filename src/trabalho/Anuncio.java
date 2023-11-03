@@ -18,7 +18,8 @@ public class Anuncio {
         this.datasLivres = datasLivres;
     }
 
-    public String getTitulo() {
+
+	public String getTitulo() {
         return titulo;
     }
 

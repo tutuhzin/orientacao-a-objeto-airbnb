@@ -13,7 +13,8 @@ public class Reserva {
         this.custo = custo;
     }
 
-    public String getDataInicio() {
+
+	public String getDataInicio() {
         return dataInicio;
     }
 

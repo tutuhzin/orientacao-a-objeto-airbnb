@@ -14,7 +14,6 @@ public class Proprietario extends Usuario{
     public void addImovel(Imovel i) {
     	listaImoveis[numImoveis] = i;
     	numImoveis++;
-    	
     }
     
     public void preencherDadosAleatoriosImoveis() {
