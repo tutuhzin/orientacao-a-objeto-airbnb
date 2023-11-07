@@ -1,18 +1,21 @@
 package trabalho;
 
 public class Endereco {
+	// Atributos
     private String pais;
     private String cidade;
     private String estado;
     private String cep;
-
+    
+    // Construtor
     public Endereco(String pais, String cidade, String estado, String cep) {
         this.pais = pais;
         this.cidade = cidade;
         this.estado = estado;
         this.cep = cep;
     }
-
+    
+    //Getters and setters
     public String getPais() {
         return pais;
     }

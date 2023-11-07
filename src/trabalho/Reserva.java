@@ -1,11 +1,13 @@
 package trabalho;
 
 public class Reserva {
+	// Atributos
     private String dataInicio;
     private String dataFim;
     private int qntHospedes;
     private double custo;
     
+    // Construtor
     public Reserva(String dataInicio, String dataFim, int qntHospedes, double custo) {
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
@@ -13,7 +15,7 @@ public class Reserva {
         this.custo = custo;
     }
 
-
+    // Getters and setters
 	public String getDataInicio() {
         return dataInicio;
     }
@@ -45,7 +47,8 @@ public class Reserva {
     public void setCusto(double custo) {
         this.custo = custo;
     }
-
+    
+    // toString
     @Override
     public java.lang.String toString() {
         return "Reserva [dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", qntHospedes=" + qntHospedes

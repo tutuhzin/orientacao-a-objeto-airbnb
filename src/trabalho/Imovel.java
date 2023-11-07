@@ -1,12 +1,14 @@
 package trabalho;
 
 public class Imovel {
+	// Atributos
     private String descricao;
     private String tipoImovel;
     private int qntQuartos;
     private int qntCamas;
     private int qntBanheiros;
-
+    
+    // Construtor
     public Imovel(String descricao, String tipoImovel, int qntQuartos, int qntCamas, int qntBanheiros) {
         this.descricao = descricao;
         this.tipoImovel = tipoImovel;
@@ -15,13 +17,7 @@ public class Imovel {
         this.qntBanheiros = qntBanheiros;
     }
 
-    @Override
-    public String toString() {
-        return "Imovel [descricao=" + descricao + ", tipoImovel=" + tipoImovel + ", qntQuartos=" + qntQuartos
-                + ", qntCamas=" + qntCamas + ", qntBanheiros=" + qntBanheiros + "]";
-    }
-
-    // Adicione os getters e setters aqui
+    // Getters e setters
 
     public String getDescricao() {
         return descricao;
@@ -62,4 +58,12 @@ public class Imovel {
     public void setQntBanheiros(int qntBanheiros) {
         this.qntBanheiros = qntBanheiros;
     }
+    
+    // toString
+    @Override
+    public String toString() {
+        return "Imovel [descricao=" + descricao + ", tipoImovel=" + tipoImovel + ", qntQuartos=" + qntQuartos
+                + ", qntCamas=" + qntCamas + ", qntBanheiros=" + qntBanheiros + "]";
+    }
 }
+

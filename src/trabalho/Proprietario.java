@@ -4,15 +4,18 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Proprietario extends Usuario{
+	// Atributos
     private Imovel listaImoveis[];
     private int numImoveis;
-
+    
+    //Construtor
     public Proprietario(String nome, String email, String telefone, double nota) {
         super(nome, email, telefone);
         listaImoveis = new Imovel[100];
         numImoveis = 0;
     }
     
+    // Getters and setters
     public Imovel[] getListaImoveis() {
         return listaImoveis;
     }
@@ -34,6 +37,12 @@ public class Proprietario extends Usuario{
     	numImoveis++;
     }
     
+    // toString
+    @Override
+    public String toString() {
+        return "Proprietario [listaImoveis=" + Arrays.toString(listaImoveis) + ", numImoveis=" + numImoveis + "]";
+    }
+    
     public void preencherDadosAleatoriosImoveis(int quantidade) {
         Random random = new Random();
         String[] tiposImovel = {"Casa", "Apartamento", "Chácara", "Chalé", "Pousada"};
@@ -49,10 +58,5 @@ public class Proprietario extends Usuario{
         }
     }
     
-
-    @Override
-    public String toString() {
-        return "Proprietario [listaImoveis=" + Arrays.toString(listaImoveis) + ", numImoveis=" + numImoveis + "]";
-    }
 
 }

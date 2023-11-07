@@ -1,13 +1,15 @@
 package trabalho;
 
 public class Anuncio {
+	// Atributos
     private String titulo;
     private String descricao;
     private double diaria;
     private String propriedade;
     private int qntReservas;
     private String datasLivres;
-
+    
+    // Construtor
     public Anuncio(String titulo, String descricao, double diaria, String propriedade, int qntReservas,
             String datasLivres) {
         this.titulo = titulo;
@@ -18,7 +20,7 @@ public class Anuncio {
         this.datasLivres = datasLivres;
     }
 
-
+    // Getters and setters
 	public String getTitulo() {
         return titulo;
     }
@@ -66,7 +68,8 @@ public class Anuncio {
     public void setDatasLivres(String datasLivres) {
         this.datasLivres = datasLivres;
     }
-
+    
+    // toString
     @Override
     public java.lang.String toString() {
         return "Anuncio [titulo=" + titulo + ", descricao=" + descricao + ", diaria=" + diaria + ", propriedade="

@@ -1,16 +1,19 @@
 package trabalho;
 
 public class Usuario implements Avaliavel{
+	// Atributos
     protected String nome;
     protected String email;
     protected String telefone;
     
+    //Construtor
     public Usuario(String nome, String email, String telefone) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
     }
-
+    
+    // Getters and setters
     public String getNome() {
         return nome;
     }
@@ -34,10 +37,12 @@ public class Usuario implements Avaliavel{
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
+    
+    // toString
     @Override
     public java.lang.String toString() {
         return "Usuario [nome=" + nome + ", email=" + email + ", telefone=" + telefone + "]";
     }
     
 }
+

@@ -4,7 +4,7 @@ package trabalho;
 import java.util.Arrays;
 
 public class Hospede extends Usuario {
-	//atributos
+	// Atributos
     private String listaReserva [];
     private String infoPagamento;
     
@@ -14,7 +14,7 @@ public class Hospede extends Usuario {
         super(nome, email, telefone);
     }
 
-    //getters and setters
+    // Getters and setters
     public String[] getListaReserva() {
         return listaReserva;
     }
@@ -30,24 +30,25 @@ public class Hospede extends Usuario {
     public void setInfoPagamento(String infoPagamento) {
         this.infoPagamento = infoPagamento;
     }
-
-    public void criarReserva(String reserva) {
-        for(int i = 0; i < listaReserva.length;) {
-        	if(listaReserva[i] == null);
-        	listaReserva[i] = reserva; // armazena a reserva no primeiro array
-        	break;
-        }
-    }
-
-    public boolean cancelarReserva(){
-        return false;
-    }
-
+    
+    // toString
 	@Override
 	public String toString() {
 		return "Hospede [listaReserva=" + Arrays.toString(listaReserva) + ", infoPagamento=" + infoPagamento + "]";
 	}
-    
+
+	 public void criarReserva(String reserva) {
+	        for(int i = 0; i < listaReserva.length;) {
+	        	if(listaReserva[i] == null);
+	        	listaReserva[i] = reserva; // armazena a reserva no primeiro array
+	        	break;
+	        }
+	    }
+
+	    public boolean cancelarReserva(){
+	        return false;
+	    }
+
     
     
     

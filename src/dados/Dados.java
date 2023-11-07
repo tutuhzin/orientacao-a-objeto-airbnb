@@ -12,7 +12,6 @@ public class Dados {
     }
 
     // Getters and setters
-
     public Imovel[] getImoveis() {
         return imoveis;
     }
@@ -24,15 +23,20 @@ public class Dados {
     public void setnImoveis(int nImoveis) {
         this.nImoveis = nImoveis;
     }
-
+    
+    
     public void preencherDados() {
+    	int nObjetosCriar = 0;
         for (int i = 0; i < 10; i++) {
             String s = String.valueOf(i);
             imoveis[i] = new Imovel("Casa " + s, "Local " + s, i, i, i);
+            nObjetosCriar++;
         }
-        nImoveis = 10;
+        // Quantos objetos quer criar
+        nImoveis = nObjetosCriar;
     }
-
+    
+    // Vai adicionar um objeto imovel no array de imoveis
     public void adicionarImovel(Imovel novoImovel) {
         if (nImoveis < imoveis.length) {
             imoveis[nImoveis] = novoImovel;
@@ -42,13 +46,14 @@ public class Dados {
             System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
         }
     }
-
+    
+    // Vai remover um objeto imovel no array de imoveis
     public void removerImovel(Imovel imovelParaRemover) {
         int indiceEncontrado = -1;
-
         for (int i = 0; i < nImoveis; i++) {
             if (imoveis[i] != null && imoveis[i].equals(imovelParaRemover)) {
                 indiceEncontrado = i;
+
                 break;
             }
         }
@@ -65,15 +70,21 @@ public class Dados {
             System.out.println("Imovel nao encontrado na lista.");
         }
     }
-
-    public int buscarImovel(Imovel imovelParaBuscar) {
+    
+    // Vai buscar um objeto imovel especifico no array de imoveis
+    public void buscarImovel(Imovel imovelParaBuscar) {
+    	boolean encontrado = false;
         for (int i = 0; i < nImoveis; i++) {
             if (imoveis[i] != null && imoveis[i].equals(imovelParaBuscar)) {
-                return i;
+            	System.out.println("Imovel encontrado no indice " + i);
+            	encontrado = true;
             }
         }
-        return -1; // Retorna -1 se o imóvel não for encontrado
-    }
+        if (encontrado == false) {
+        	System.out.println("Imovel nao encontrado.");
+        }
+       }
+    
 
     @Override
     public String toString() {
