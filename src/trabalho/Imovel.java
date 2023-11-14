@@ -18,7 +18,6 @@ public class Imovel {
     }
 
     // Getters e setters
-
     public String getDescricao() {
         return descricao;
     }
