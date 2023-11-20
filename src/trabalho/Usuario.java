@@ -1,6 +1,6 @@
 package trabalho;
 
-public class Usuario implements Avaliavel{
+public class Usuario {
 	// Atributos
     protected String nome;
     protected String email;
