@@ -1,9 +1,8 @@
 package Main;
 
 import java.util.*;
-import dados.*;
+import dados.Dados;
 import trabalho.*;
-
 
 public class Main {
 	 private static Dados d = new Dados();
@@ -21,7 +20,7 @@ public class Main {
 				 		break;
 				 		
 					case 1:
-						cadastrarImovel();
+						cadastrarImovel ();
 						break;
 					case 2:
 						//d.removerImovel();
@@ -93,12 +92,11 @@ public class Main {
 	            saida = saida + "12 - Listar hospedes\n";
 	            return saida;
 	        }
-
+	        
+	        
 	        public static boolean cadastrarImovel() {
-	            Imovel a = lerDadosImovel();
 	            if(d.getnImoveis() < 100) {
-	                d.setImoveis(d.getnImoveis(), a);
-	                d.setnImoveis(d.getnImoveis()+1);
+	            	d.adicionarImovel(lerDadosImovel());
 	                System.out.println("Imovel cadastrado com sucesso!\n");
 	                return true;
 	            } else {
