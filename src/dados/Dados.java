@@ -8,14 +8,17 @@ import trabalho.*;
 public class Dados {
     // Atributos
     private Imovel[] imoveis;
+    private Proprietario [] proprietarios;
     private String[] nomes;
     private String[] sobrenomes;
     private String[] tiposImovel;
     private int nImoveis = 0;
+    private int nProprietarios = 0;
 
     // Construtor
     public Dados() {
         imoveis = new Imovel[100];  
+        proprietarios = new Proprietario [100];  
         
         tiposImovel = new String[] {" Casa", " Apartamento", " Chácara", " Chalé", " Pousada", " Kitnet"};
 
@@ -155,10 +158,11 @@ public class Dados {
         String nomeCompleto = gerarNome();
         String email = gerarEmail(nomeCompleto);
         String telefoneAleatorio = gerarTelefone();
-    
-        Proprietario novoProprietario = new Proprietario(nomeCompleto, email, telefoneAleatorio);
+        Imovel imovelProprietario = gerarImovel();
+        Proprietario novoProprietario = new Proprietario(nomeCompleto, email, telefoneAleatorio,imovelProprietario);
         
         novoProprietario.addImovel(gerarImovel());
+        adicionarProprietario (novoProprietario);
         //System.out.println("Proprietario adicionado com sucesso!");
         return novoProprietario;
     }
@@ -193,6 +197,17 @@ public class Dados {
         }
     }
     
+    // Adicionar um objeto proprietariono array de proprietarios
+    public void adicionarProprietario(Proprietario novoProprietario) {
+        if (nProprietarios < proprietarios.length) {
+        	proprietarios [nProprietarios] = novoProprietario;
+            nProprietarios++;
+            //System.out.println("Imovel adicionado com sucesso!");
+        } else {
+            //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
+        }
+    }
+    
     // Remover um objeto imovel no array de imoveis
     public void removerImovel(Imovel imovelParaRemover) {
         int indiceEncontrado = -1;
@@ -217,6 +232,7 @@ public class Dados {
         }
     }
     
+    // Vai printar os imoveis já criados e seus atributos
     public void listarImoveis ()
     {
     	for (int i = 1; i < nImoveis; i++) {
@@ -227,6 +243,17 @@ public class Dados {
             		+ " Banheiros:" + imoveis[i].getQntBanheiros() + ",");
         }
     }
+    
+    // Vai printar os proprietarios já criados e seus atributos
+    public void listarProprietarios ()
+    {
+    	for (int i = 0; i < nProprietarios; i++) {
+    		
+            System.out.println(proprietarios[i].getNome() + " = Email:" + proprietarios[i].getEmail() + ","
+            		+ " Telefone:" + proprietarios[i].getTelefone());
+        }
+    }
+    
     
     /*
     // Busca um objeto imovel especifico no array de imoveis
