@@ -155,13 +155,14 @@ public class Dados {
     }
 
     public Proprietario gerarProprietario() {
+  
         String nomeCompleto = gerarNome();
         String email = gerarEmail(nomeCompleto);
         String telefoneAleatorio = gerarTelefone();
         Imovel imovelProprietario = gerarImovel();
         Proprietario novoProprietario = new Proprietario(nomeCompleto, email, telefoneAleatorio,imovelProprietario);
         
-        novoProprietario.addImovel(gerarImovel());
+        novoProprietario.addImovel(imovelProprietario);
         adicionarProprietario (novoProprietario);
         //System.out.println("Proprietario adicionado com sucesso!");
         return novoProprietario;
@@ -184,7 +185,6 @@ public class Dados {
     }
     
  
-
 	
     // Adicionar um objeto imovel no array de imoveis
     public void adicionarImovel(Imovel novoImovel) {
@@ -202,7 +202,7 @@ public class Dados {
         if (nProprietarios < proprietarios.length) {
         	proprietarios [nProprietarios] = novoProprietario;
             nProprietarios++;
-            //System.out.println("Imovel adicionado com sucesso!");
+            //System.out.println("Propritario adicionado com sucesso!");
         } else {
             //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
         }
