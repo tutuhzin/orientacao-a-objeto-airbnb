@@ -19,6 +19,7 @@ public class Main {
 				 	case 0:
 				 		System.out.println("Obrigado por utilizar o sistema. Ate logo!");
 				 		break;
+				 		
 					case 1:
 						cadastrarImovel();
 						break;
@@ -49,7 +50,7 @@ public class Main {
 						//editar(aux, p);
 						break;
 					case 8: 
-						//listarHospede();
+						d.listarProprietarios();
 						break;
 					case 9:
 						//cadastrarHospede();
@@ -130,4 +131,5 @@ public class Main {
 	        }
 	}
 
-  
+
+
