@@ -43,16 +43,5 @@ public class Hospede extends Usuario {
 	        	listaReserva[i] = reserva; // armazena a reserva no primeiro array
 	        	break;
 	        }
-	    }
-
-	    public boolean cancelarReserva(){
-	        return false;
-	    }
-
-    
-    
-    
-    
-    
-    
+	    }    
 }

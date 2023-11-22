@@ -1,16 +1,17 @@
 package Main;
 
 import java.util.*;
-import dados.Dados;
+import dados.*;
 import trabalho.*;
 
 public class Main {
-	 private static Dados d = new Dados();
-	    private static Scanner in = new Scanner(System.in);
+	private static Dados d = new Dados();
+	private static Scanner in = new Scanner(System.in);
 	    public static void main(String[] args) {
 	        int op = -1;
-			int aux;
+			int aux = 0;
 			d.preencherDados();
+			
 			while(op != 0) {
 				System.out.print(imprimirMenu());
 				op = in.nextInt();
@@ -23,24 +24,25 @@ public class Main {
 						cadastrarImovel ();
 						break;
 					case 2:
-						//d.removerImovel();
+						d.listarImoveis();
+						
 						break;
 					case 3: 
 						System.out.println("Escolha um dos imoveis a seguir para editar as informacoes:\n");
 						d.listarImoveis();
 						aux = in.nextInt();
-						Imovel a = lerDadosImovel();
-						//editar(aux, a);
+						Imovel a  = lerDadosImovel();
+						editarImovel(aux, a);
 						break;
 					case 4: 
 						d.listarImoveis();
+						removerImovel();
 						break;
 					case 5:
 						cadastrarProprietario();
 						break;
 					case 6:
-						d.listarProprietarios();
-						
+						listarProprietarios();
 						break;
 					case 7: 
 						System.out.println("Escolha um dos proprietarios a seguir para editar as informacoes:\n");
@@ -77,9 +79,9 @@ public class Main {
 	            String saida = new String("Escolha uma das opcoes a seguir:\n");
 	            saida = saida + "00 - Sair da aplicacao\n";
 	            saida = saida + "01 - Cadastrar novo imovel\n";
-	            saida = saida + "02 - Remover imovel existente\n";
+	            saida = saida + "02 - Listar Imovel\n";
 	            saida = saida + "03 - Editar imovel existente\n";
-	            saida = saida + "04 - Listar imoveis\n";
+	            saida = saida + "04 - Remover imovel existente\n";
 	            saida = saida + "05 - Cadastrar novo proprietario\n";
 	            saida = saida + "06 - Listar Proprietarios \n";
 	            saida = saida + "07 - Editar proprietario existente\n";
@@ -98,7 +100,7 @@ public class Main {
 	                System.out.println("Imovel cadastrado com sucesso!\n");
 	                return true;
 	            } else {
-	                System.out.println("Não foi possivel cadastrar o imovel!\n");
+	                System.out.println("Nao foi possivel cadastrar o imovel!\n");
 	                return false;
 	            }
 	        }
@@ -126,21 +128,48 @@ public class Main {
 	            return imovel;	
 	        }
 	        
+	        // Removendo Imovel
+			public static void removerImovel() {
+				System.out.println("Escolha um dos alunos a seguir para ser removido:\n");
+				d.listarImoveis();
+				int i = in.nextInt();
+				if(i < d.getnImoveis() && i > 0) {
+					swapListaImoveis(i);
+					d.setImovel(d.getnImoveis(), null);
+					d.setnImoveis(d.getnImoveis() - 1);
+					System.out.println("Imovel removido com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}	
+			}
+
+			public static void swapListaImoveis(int a) {
+				for(int i = a; i < d.getnImoveis() - 1; i++) 
+					d.setImovel(i, d.getImovel(i+1));
+			}
+
+	        public static void editarImovel(int i, Imovel a) {
+				if(i < d.getnImoveis() && i >= 0) {
+					d.setImovel(i, a);
+					System.out.println("Dados editados com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}
+			}
+
 	        // Cadastrando um novo proprietario - 05
-	        
-	        
-	        public static boolean cadastrarProprietario() {
+			public static boolean cadastrarProprietario() {
 
 	            Proprietario proprietario = lerDadosProprietario();
 
 	            if (d.getnProprietarios() < 100) {
 
 	                d.adicionarProprietario(proprietario);
-	                System.out.println("Proprietário cadastrado com sucesso!\n");
+	                System.out.println("Proprietario cadastrado com sucesso!\n");
 	                return true;
 	            } else {
 
-	                System.out.println("Não foi possível cadastrar o proprietário!\n");
+	                System.out.println("Nao foi possível cadastrar o proprietario!\n");
 	                return false;
 	            }
 	        }
@@ -159,7 +188,7 @@ public class Main {
 
 	            return proprietario;
 	        }
-
+ 
 	        // Removendo Proprietario - 06
 	        
 	        public static void removerProprietario() {
@@ -211,8 +240,10 @@ public class Main {
 	    	public static void listarProprietarios() {
 	    	    if (d.getnProprietarios() == 0) {
 	    	        System.out.println("Não há proprietários para listar.");
-	    	        return;
-	    	    } 
+	    	    } else {
+					for(int i = 0; i < d.getnProprietarios(); i++) 
+					System.out.println(i + " -> " + d.getProprietarios()[i].toString());
+				}
 	    	   
 
 	    	    // Cria um array temporário para armazenar os proprietários
@@ -229,14 +260,74 @@ public class Main {
 	    	    }
 	    	}
 	        
+	    	public static boolean cadastrarHospede() {
+				Hospede a = lerDadosHospede();
+				if(d.getnHospede() < 100) {
+					d.setHospede(d.getnHospede(), a);
+					d.setnHospedes(d.getnHospede()+1);
+					System.out.println("Hospede cadastrado com sucesso!\n");
+					return true;
+				} else {
+					System.out.println("Não foi possivel cadastrar o Hospede!\n");
+					return false;
+				}
+			}
+			
+			public static Hospede lerDadosHospede() {
+				String nome;
+    			String email;
+    			String telefone;
+				in.nextLine(); //esvazia dados do teclado
+				
+				System.out.println("Digite o nome do hospede: ");
+				nome = in.nextLine();
+				System.out.println("Digite o email do hospede:");
+				email = in.nextLine();
+				System.out.println("Digite o telefone do hospede:");
+				telefone = in.nextLine();
 
-	   
-	        
-	        
+				Hospede a = new Hospede(nome, email, telefone);
+				return a;	
+			}
+			
+			public static void removerHospede() {
+				System.out.println("Escolha um dos hospede a seguir para ser removido:\n");
+				listarHospedes();
+				int i = in.nextInt();
+				if(i < d.getnHospede() && i > 0) {
+					swapListaHospede(i);
+					d.setHospede(d.getnHospede(), null);
+					d.setnHospedes(d.getnHospede() - 1);
+					System.out.println("Hospede removido com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}
+				
+			}
+			
+			public static void swapListaHospede(int a) {
+				for(int i = a; i < d.getnHospede() - 1; i++) 
+					d.setHospede(i, d.getHospede(i+1));
+			}
+			
+			public static void editar(int i, Hospede a) {
+				if(i < d.getnHospede() && i >= 0) {
+					d.setHospede(i, a);
+					System.out.println("Dados editados com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}
+			}
+			
+			public static void listarHospedes() {
+				in.nextLine(); //esvazia dados do teclado
+				for(int i = 0; i < d.getnHospede(); i++) 
+					System.out.println(i + " -> " + d.getHospedes()[i].toString());
+			}
+      
 } // FIM DA MAIN
 
 	        
 	        
 	
-
 

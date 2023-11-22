@@ -9,20 +9,23 @@ public class Dados {
     // Atributos
     private Imovel[] imoveis;
     private Proprietario [] proprietarios;
+    private Hospede[] hospedes;
     private String[] nomes;
     private String[] sobrenomes;
     private String[] tiposImovel;
     private int nImoveis = 0;
     private int nProprietarios=0;
+    private int nHospede=0;
 
     // Construtor
     public Dados() {
         imoveis = new Imovel[100];  
         proprietarios = new Proprietario [100];  
+        hospedes = new Hospede[100];  
         
         tiposImovel = new String[] {" Casa", " Apartamento", " Chácara", " Chalé", " Pousada", " Kitnet"};
 
-        nomes = new String []{
+        nomes = new String [] {
         		" Alan", " Luiza", " Helena", " Beatriz", " Mariana", " Livia", " Ana Clara", " Rafaela", " Yasmin",
         		" Gabriela", " Melissa", " Esther", " Isis", " Maria", " Maria Fernanda", " Catarina", " Alicia", 
         		" Maria Alice", " Amanda", " Alicia", " Valentina", " Ana", " Alana", " Isis", " Clara", " Gabriela", 
@@ -68,9 +71,41 @@ public class Dados {
         return imoveis;
     }
 
+    public Imovel getImovel(int i) {
+        return imoveis[i];
+    }
+    
     public void setImoveis(Imovel[] imoveis) {
         this.imoveis = imoveis;
     }
+
+    public void setImovel(int i, Imovel a) {
+		imoveis[i] = a;
+	}
+
+    public Hospede[] getHospedes() {
+        return hospedes;
+    }
+
+    public Hospede getHospede(int i) {
+        return hospedes[i];
+    }
+
+    public void setHospedes(Hospede[] hospedes) {
+        this.hospedes = hospedes;
+    }
+
+    public void setHospede(int i, Hospede a) {
+		hospedes[i] = a;
+	}
+
+    public void setnHospedes(int nHospede) {
+		this.nHospede = nHospede;
+	}
+
+    public int getnHospede() {
+		return nHospede;
+	}
 
     public String[] getNomes() {
         return nomes;
@@ -119,18 +154,10 @@ public class Dados {
 	public void setnProprietarios(int nProprietarios) {
 		this.nProprietarios = nProprietarios;
 	}
-	
-	
-	
-	
-	
-	
 
 	// Vai preencher os imoveis e proprietarios
-    public void preencherDados ()
-    {
-    	for (int i = 0; i <10; i++)
-    	{
+    public void preencherDados() {
+    	for (int i = 0; i <10; i++) {
     		gerarProprietario ();
     	}
     }
@@ -201,7 +228,6 @@ public class Dados {
             nImoveis++;
         }
     }
- 
     
     // Remover um objeto imovel no array de imoveis
     public void removerImovel(Imovel imovelParaRemover) {
@@ -228,8 +254,7 @@ public class Dados {
     }
     
     // Vai printar os imoveis já criados e seus atributos
-    public void listarImoveis ()
-    {
+    public void listarImoveis() {
     	for (int i = 1; i < nImoveis; i++) {
     		
             System.out.println(imoveis[i].getDescricao() + " = Tipo:" + imoveis[i].getTipoImovel() + ","
@@ -238,11 +263,10 @@ public class Dados {
             		+ " Banheiros:" + imoveis[i].getQntBanheiros() + ",");
         }
     }
-
     
     	// PARTE DO IMOVEL 
     
-    // Adicionar um objeto proprietariono array de proprietarios
+    // Adicionar um objeto proprietario no array de proprietarios
     public void adicionarProprietario(Proprietario novoProprietario) {
         if (nProprietarios < proprietarios.length) {
         	proprietarios [nProprietarios] = novoProprietario;
@@ -254,7 +278,6 @@ public class Dados {
         }
     }
     
-    
     public Proprietario gerarProprietario() {
     	  
         String nomeCompleto = gerarNome();
@@ -262,6 +285,7 @@ public class Dados {
         String telefoneAleatorio = gerarTelefone();
         Imovel imovelProprietario = gerarImovel();
         Proprietario novoProprietario = new Proprietario(nomeCompleto, email, telefoneAleatorio);
+        novoProprietario.addImovel(imovelProprietario);
         //System.out.println("Proprietario adicionado com sucesso!");
         return novoProprietario;
     }
@@ -285,41 +309,28 @@ public class Dados {
         return null;
     }
 
- 
-    
-    public void listarProprietarios() {
-        for (Proprietario proprietario : proprietarios) {
-            if (proprietario == null) {
-                continue;
-            }
-
-            System.out.println("Nome: " + proprietario.getNome() + " = Email: " + proprietario.getEmail() + ","
-                    + " Telefone: " + proprietario.getTelefone());
-        }
+    public void gerarHospede() {
+        String nomeCompleto = gerarNome();
+        String email = gerarEmail(nomeCompleto);
+        String telefoneAleatorio = gerarTelefone();
+        Hospede novoHospede = new Hospede(nomeCompleto, email, telefoneAleatorio);
+        adicionarHospede(novoHospede);
+        //System.out.println("Hospede adicionado com sucesso!");
     }
 
-  
+    public void adicionarHospede(Hospede novoHospede) {
+        if (nHospede < hospedes.length) {
+        	hospedes [nHospede] = novoHospede;
+            nHospede++;
+            //System.out.println("Hospede adicionado com sucesso!");
+        } else {
+            //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
+        }
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     @Override
     public String toString() {
         return "Dados [imoveis=" + Arrays.toString(imoveis) + "]";
     }
 
-	
 }
