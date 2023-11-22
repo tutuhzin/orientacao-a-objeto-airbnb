@@ -13,7 +13,7 @@ public class Dados {
     private String[] sobrenomes;
     private String[] tiposImovel;
     private int nImoveis = 0;
-    private int nProprietarios = 0;
+    private int nProprietarios=0;
 
     // Construtor
     public Dados() {
@@ -104,14 +104,35 @@ public class Dados {
         this.nImoveis = nImoveis;
     }
     
-    // Vai preencher os imoveis e proprietarios
+    public Proprietario[] getProprietarios() {
+		return proprietarios;
+	}
+
+	public void setProprietarios(Proprietario[] proprietarios) {
+		this.proprietarios = proprietarios;
+	}
+
+	public int getnProprietarios() {
+		return nProprietarios;
+	}
+
+	public void setnProprietarios(int nProprietarios) {
+		this.nProprietarios = nProprietarios;
+	}
+	
+	
+	
+	
+	
+	
+
+	// Vai preencher os imoveis e proprietarios
     public void preencherDados ()
     {
     	for (int i = 0; i <10; i++)
     	{
     		gerarProprietario ();
     	}
-    	//System.out.println("Dados preenchidos com sucesso!");
     }
 
     // Geradores de Dados Aleatórios
@@ -154,21 +175,8 @@ public class Dados {
         return telefone.toString();
     }
 
-    public Proprietario gerarProprietario() {
-  
-        String nomeCompleto = gerarNome();
-        String email = gerarEmail(nomeCompleto);
-        String telefoneAleatorio = gerarTelefone();
-        Imovel imovelProprietario = gerarImovel();
-        Proprietario novoProprietario = new Proprietario(nomeCompleto, email, telefoneAleatorio,imovelProprietario);
-        
-        novoProprietario.addImovel(imovelProprietario);
-        adicionarProprietario (novoProprietario);
-        //System.out.println("Proprietario adicionado com sucesso!");
-        return novoProprietario;
-    }
-    
 
+    //adicionar Imovel
     public Imovel gerarImovel() {
         Random random = new Random();
     
@@ -191,22 +199,9 @@ public class Dados {
         if (nImoveis < imoveis.length) {
             imoveis[nImoveis] = novoImovel;
             nImoveis++;
-            //System.out.println("Imovel adicionado com sucesso!");
-        } else {
-            //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
         }
     }
-    
-    // Adicionar um objeto proprietariono array de proprietarios
-    public void adicionarProprietario(Proprietario novoProprietario) {
-        if (nProprietarios < proprietarios.length) {
-        	proprietarios [nProprietarios] = novoProprietario;
-            nProprietarios++;
-            //System.out.println("Propritario adicionado com sucesso!");
-        } else {
-            //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
-        }
-    }
+ 
     
     // Remover um objeto imovel no array de imoveis
     public void removerImovel(Imovel imovelParaRemover) {
@@ -243,36 +238,88 @@ public class Dados {
             		+ " Banheiros:" + imoveis[i].getQntBanheiros() + ",");
         }
     }
+
     
-    // Vai printar os proprietarios já criados e seus atributos
-    public void listarProprietarios ()
-    {
-    	for (int i = 0; i < nProprietarios; i++) {
-    		
-            System.out.println(proprietarios[i].getNome() + " = Email:" + proprietarios[i].getEmail() + ","
-            		+ " Telefone:" + proprietarios[i].getTelefone());
+    	// PARTE DO IMOVEL 
+    
+    // Adicionar um objeto proprietariono array de proprietarios
+    public void adicionarProprietario(Proprietario novoProprietario) {
+        if (nProprietarios < proprietarios.length) {
+        	proprietarios [nProprietarios] = novoProprietario;
+            nProprietarios++;
+         
+            //System.out.println("Propritario adicionado com sucesso!");
+        } else {
+            //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
         }
     }
     
     
-    /*
-    // Busca um objeto imovel especifico no array de imoveis
-    public void buscarImovel(Imovel imovelParaBuscar) {
-    	boolean encontrado = false;
-        for (int i = 0; i < nImoveis; i++) {
-            if (imoveis[i] != null && imoveis[i].equals(imovelParaBuscar)) {
-            	System.out.println("Imovel encontrado no indice " + i);
-            	encontrado = true;
+    public Proprietario gerarProprietario() {
+    	  
+        String nomeCompleto = gerarNome();
+        String email = gerarEmail(nomeCompleto);
+        String telefoneAleatorio = gerarTelefone();
+        Imovel imovelProprietario = gerarImovel();
+        Proprietario novoProprietario = new Proprietario(nomeCompleto, email, telefoneAleatorio);
+        //System.out.println("Proprietario adicionado com sucesso!");
+        return novoProprietario;
+    }
+    
+    public void removerProprietario(String nomeCompleto) {
+        Proprietario proprietario = findProprietario(nomeCompleto);
+        if (proprietario != null) {
+            adicionarProprietario(proprietario);
+            System.out.println("Proprietario removido com sucesso!");
+        } else {
+            System.out.println("Proprietario nao encontrado!");
+        }
+    }
+
+    private Proprietario findProprietario(String nomeCompleto) {
+        for (Proprietario proprietario : proprietarios) {
+            if (proprietario.getNome().equals(nomeCompleto)) {
+                return proprietario;
             }
         }
-        if (encontrado == false) {
-        	System.out.println("Imovel nao encontrado.");
+        return null;
+    }
+
+ 
+    
+    public void listarProprietarios() {
+        for (Proprietario proprietario : proprietarios) {
+            if (proprietario == null) {
+                continue;
+            }
+
+            System.out.println("Nome: " + proprietario.getNome() + " = Email: " + proprietario.getEmail() + ","
+                    + " Telefone: " + proprietario.getTelefone());
         }
     }
-    */
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     @Override
     public String toString() {
         return "Dados [imoveis=" + Arrays.toString(imoveis) + "]";
     }
+
+	
 }

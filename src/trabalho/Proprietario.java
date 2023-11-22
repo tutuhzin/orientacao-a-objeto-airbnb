@@ -22,4 +22,6 @@ public class Proprietario extends Usuario{
     public void setImoveis(List<Imovel> imoveis) {
         this.imoveis = imoveis;
     }
+
+
 }

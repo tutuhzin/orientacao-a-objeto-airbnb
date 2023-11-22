@@ -36,20 +36,19 @@ public class Main {
 						d.listarImoveis();
 						break;
 					case 5:
-						//cadastrarProprietario();
+						cadastrarProprietario();
 						break;
 					case 6:
-						//removerProprietario();
+						d.listarProprietarios();
+						
 						break;
 					case 7: 
 						System.out.println("Escolha um dos proprietarios a seguir para editar as informacoes:\n");
-						//listarProprietarios();
+						listarProprietarios();
 						aux = in.nextInt();
-						//Proprietario p = lerDadosProprietario();
-						//editar(aux, p);
 						break;
 					case 8: 
-						d.listarProprietarios();
+						removerProprietario();
 						break;
 					case 9:
 						//cadastrarHospede();
@@ -61,8 +60,7 @@ public class Main {
 						System.out.println("Escolha um dos hospedes a seguir para editar as informacoes:\n");
 						//listarHospedes();
 						aux = in.nextInt();
-						//Imovel a = lerDadosHospede();
-						//editar(aux, a);
+					
 						break;
 					case 12: 
 						//listarHospedes();
@@ -83,9 +81,9 @@ public class Main {
 	            saida = saida + "03 - Editar imovel existente\n";
 	            saida = saida + "04 - Listar imoveis\n";
 	            saida = saida + "05 - Cadastrar novo proprietario\n";
-	            saida = saida + "06 - Remover proprietario existente\n";
+	            saida = saida + "06 - Listar Proprietarios \n";
 	            saida = saida + "07 - Editar proprietario existente\n";
-	            saida = saida + "08 - Listar proprietarios\n";
+	            saida = saida + "08 - Remover proprietario existente\n";
 	            saida = saida + "09 - Cadastrar novo hospede\n";
 	            saida = saida + "10 - Remover hospede existente\n";
 	            saida = saida + "11 - Editar hospede existente\n";
@@ -124,10 +122,121 @@ public class Main {
 	            System.out.println("Digite a quantidade de banheiros:");
 	            qntBanheiros = Integer.parseInt(in.nextLine());
 
-	            Imovel a = new Imovel(descricao, tipoImovel, qntQuartos, qntCamas, qntBanheiros);
-	            return a;	
+	            Imovel imovel = new Imovel(descricao, tipoImovel, qntQuartos, qntCamas, qntBanheiros);
+	            return imovel;	
 	        }
-	}
+	        
+	        // Cadastrando um novo proprietario - 05
+	        
+	        
+	        public static boolean cadastrarProprietario() {
 
+	            Proprietario proprietario = lerDadosProprietario();
+
+	            if (d.getnProprietarios() < 100) {
+
+	                d.adicionarProprietario(proprietario);
+	                System.out.println("Proprietário cadastrado com sucesso!\n");
+	                return true;
+	            } else {
+
+	                System.out.println("Não foi possível cadastrar o proprietário!\n");
+	                return false;
+	            }
+	        }
+	       
+	        
+	        public static Proprietario lerDadosProprietario() {
+	            in.nextLine();
+	            
+	            System.out.println("Nome do Proprietario");
+	            String nome = in.nextLine();
+	            System.out.println("Digite o seu email: ");
+	            String email = in.nextLine();
+	            System.out.println("Numero de telefone: ");
+	            String telefone = in.nextLine();
+	            Proprietario proprietario = new Proprietario(nome, email, telefone);
+
+	            return proprietario;
+	        }
+
+	        // Removendo Proprietario - 06
+	        
+	        public static void removerProprietario() {
+
+	            // Apresentar a lista de proprietários
+	            System.out.println("Escolha um dos proprietarios a seguir para ser removido:\n");
+	            listarProprietarios();
+
+	            // Ler o índice do proprietário a ser removido
+	            int i = in.nextInt();
+
+	            // Verificar se o proprietário existe
+	            boolean proprietarioExiste = false;
+	            for (int j = 0; j < d.getnProprietarios(); j++) {
+	                if (i == j) {
+	                    proprietarioExiste = true;
+	                    break;
+	                }
+	            }
+
+	            // Verificar se o índice é válido
+	            if (proprietarioExiste && i < d.getnProprietarios() && i > 0) {
+
+	                // Remover o proprietário da lista
+	                Proprietario proprietarioRemovido = d.getProprietarios()[i];
+	                swapListaProprietarios(i);
+	                d.setnProprietarios(d.getnProprietarios() - 1);
+
+	                // Exibir uma mensagem de confirmação
+	                System.out.println("Proprietario removido com sucesso: " + proprietarioRemovido.getNome());
+	            } else {
+
+	                // Exibir uma mensagem de erro
+	                if (!proprietarioExiste) {
+	                    System.out.println("O proprietario selecionado não existe!");
+	                } else {
+	                    System.out.println("Você escolheu um número invalido!");
+	                }
+	            }
+	        }
+	        
+	    	public static void swapListaProprietarios(int p) {
+	    		for(int i = p; i < d.getnProprietarios() - 1; i++) 
+	    			d.setnProprietarios(i);
+	    	}
+
+	    	
+	    	
+	    	public static void listarProprietarios() {
+	    	    if (d.getnProprietarios() == 0) {
+	    	        System.out.println("Não há proprietários para listar.");
+	    	        return;
+	    	    } 
+	    	   
+
+	    	    // Cria um array temporário para armazenar os proprietários
+	    	    Proprietario[] proprietariosTemporarios = new Proprietario[d.getnProprietarios()];
+
+	    	    for (int i = 0; i < d.getnProprietarios(); i++) {
+	    	        proprietariosTemporarios[i] = d.getProprietarios()[i];
+	    	    }
+
+	    	    // Imprime os proprietários
+	    	    for (Proprietario proprietario : proprietariosTemporarios) {
+	    	        System.out.println(proprietario.getNome() + " = Email:" + proprietario.getEmail() + ","
+	    	                + " Telefone:" + proprietario.getTelefone());
+	    	    }
+	    	}
+	        
+
+	   
+	        
+	        
+} // FIM DA MAIN
+
+	        
+	        
+	
 
 
