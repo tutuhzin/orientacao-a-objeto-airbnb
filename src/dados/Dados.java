@@ -2,6 +2,7 @@ package dados;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 import trabalho.*;
 
@@ -180,7 +181,7 @@ public class Dados {
     public Imovel gerarImovel() {
         Random random = new Random();
     
-        String descricao = "Imóvel n° " + nImoveis;
+        String descricao = "Imovel numero " + nImoveis;
         String tipoImovel = getTiposImovel()[random.nextInt(tiposImovel.length)];
         int qntQuartos = + random.nextInt(5) + 1;
         int qntCamas = random.nextInt(5) + 1;
@@ -201,46 +202,63 @@ public class Dados {
             nImoveis++;
         }
     }
- 
-    
     // Remover um objeto imovel no array de imoveis
-    public void removerImovel(Imovel imovelParaRemover) {
+    public void removerImovel(int j, Scanner in) {
+    	
         int indiceEncontrado = -1;
-        for (int i = 0; i < nImoveis; i++) {
-            if (imoveis[i] != null && imoveis[i].equals(imovelParaRemover)) {
-                indiceEncontrado = i;
 
+        // Procurar o índice do imóvel a ser removido
+        for (int i = 0; i < nImoveis; i++) {
+            if (imoveis[i] != null && i == j) {
+                indiceEncontrado = i;
                 break;
             }
         }
 
+        // Verificar se o índice foi encontrado
         if (indiceEncontrado != -1) {
-            // Remover o imóvel encontrando
-            for (int i = indiceEncontrado; i < nImoveis - 1; i++) {
-                imoveis[i] = imoveis[i + 1];
+ 
+            System.out.println("Imovel a ser removido:\n" + imoveis[indiceEncontrado].toString());
+            System.out.println("Deseja realmente remover este imovel? (S/N)");
+            String resposta = in.next();
+
+            if (resposta.equalsIgnoreCase("S")) {
+                // Remover o imóvel da lista
+                for (int k = indiceEncontrado; k < nImoveis - 1; k++) {
+                    imoveis[k] = imoveis[k + 1];
+                }
+                imoveis[nImoveis - 1] = null;
+                nImoveis--;
+
+                System.out.println("Imovel removido com sucesso.");
+            } else {
+                System.out.println("Remocao cancelada.");
             }
-            imoveis[nImoveis - 1] = null;
-            nImoveis--;
-            System.out.println("Imovel removido com sucesso!");
         } else {
-            System.out.println("Imovel nao encontrado na lista.");
+            System.out.println("Imovel nao encontrado na lista. Indice invalido.");
         }
+        
     }
+   
     
     // Vai printar os imoveis já criados e seus atributos
     public void listarImoveis ()
     {
-    	for (int i = 1; i < nImoveis; i++) {
+    	for (int i = 0; i < nImoveis; i++) {
     		
-            System.out.println(imoveis[i].getDescricao() + " = Tipo:" + imoveis[i].getTipoImovel() + ","
-            		+ " Quartos:" + imoveis[i].getQntQuartos() + ","
-            		+ " Camas:" + imoveis[i].getQntCamas() + ","
-            		+ " Banheiros:" + imoveis[i].getQntBanheiros() + ",");
+            System.out.println(imoveis[i].getDescricao() + " = Tipo: " + imoveis[i].getTipoImovel() + ","
+            		+ " Quartos: " + imoveis[i].getQntQuartos() + ","
+            		+ " Camas: " + imoveis[i].getQntCamas() + ","
+            		+ " Banheiros: " + imoveis[i].getQntBanheiros() + ",");
         }
     }
 
+
     
-    	// PARTE DO IMOVEL 
+    
+    
+    
+    	// PARTE PROPRIETARIO
     
     // Adicionar um objeto proprietariono array de proprietarios
     public void adicionarProprietario(Proprietario novoProprietario) {
@@ -321,5 +339,5 @@ public class Dados {
         return "Dados [imoveis=" + Arrays.toString(imoveis) + "]";
     }
 
-	
+
 }
