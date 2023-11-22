@@ -159,7 +159,8 @@ public class Dados {
 	// Vai preencher os imoveis e proprietarios
     public void preencherDados() {
     	for (int i = 0; i <10; i++) {
-    		gerarProprietario ();
+    		gerarProprietario();
+    		gerarHospede();
     	}
     }
 
@@ -273,7 +274,7 @@ public class Dados {
     // Vai printar os imoveis já criados e seus atributos
     public void listarImoveis ()
     {
-    	for (int i = 1; i < nImoveis; i++) {
+    	for (int i = 0; i < nImoveis; i++) {
     		
             System.out.println(imoveis[i].getDescricao() + " = Tipo: " + imoveis[i].getTipoImovel() + ","
             		+ " Quartos: " + imoveis[i].getQntQuartos() + ","
@@ -290,23 +291,21 @@ public class Dados {
         if (nProprietarios < proprietarios.length) {
         	proprietarios [nProprietarios] = novoProprietario;
             nProprietarios++;
-         
             //System.out.println("Propritario adicionado com sucesso!");
         } else {
             //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
         }
     }
     
-    public Proprietario gerarProprietario() {
-    	  
+    public void gerarProprietario() {
         String nomeCompleto = gerarNome();
         String email = gerarEmail(nomeCompleto);
         String telefoneAleatorio = gerarTelefone();
+
         Imovel imovelProprietario = gerarImovel();
         Proprietario novoProprietario = new Proprietario(nomeCompleto, email, telefoneAleatorio);
         novoProprietario.addImovel(imovelProprietario);
-        //System.out.println("Proprietario adicionado com sucesso!");
-        return novoProprietario;
+        adicionarProprietario(novoProprietario);
     }
     
     public void removerProprietario(String nomeCompleto) {

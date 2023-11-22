@@ -32,8 +32,7 @@ public class Main {
 						Imovel a = lerDadosImovel();
 						editarImovel(aux, a);
 						break;
-					case 4: 
-						d.listarImoveis();
+					case 4:
 						removerImovel();
 						break;
 					case 5:
@@ -76,7 +75,7 @@ public class Main {
 	            String saida = new String("Escolha uma das opcoes a seguir:\n");
 	            saida = saida + "00 - Sair da aplicacao\n";
 	            saida = saida + "01 - Cadastrar novo imovel\n";
-	            saida = saida + "02 - Listar Imovel\n";
+	            saida = saida + "02 - Listar Imoveis\n";
 	            saida = saida + "03 - Editar imovel existente\n";
 	            saida = saida + "04 - Remover imovel existente\n";
 	            saida = saida + "05 - Cadastrar novo proprietario\n";
@@ -125,7 +124,7 @@ public class Main {
 	        }
 			
 			public static void removerImovel() {
-				System.out.println("Escolha um dos alunos a seguir para ser removido:\n");
+				System.out.println("Escolha um dos imoveis a seguir para ser removido:\n");
 				d.listarImoveis();
 				int i = in.nextInt();
 				if(i < d.getnImoveis() && i > 0) {
@@ -238,11 +237,7 @@ public class Main {
 	    	public static void listarProprietarios() {
 	    	    if (d.getnProprietarios() == 0) {
 	    	        System.out.println("Não há proprietários para listar.");
-	    	    } else {
-					for(int i = 0; i < d.getnProprietarios(); i++) 
-					System.out.println(i + " -> " + d.getProprietarios()[i].toString());
-				}
-	    	   
+	    	    }
 
 	    	    // Cria um array temporário para armazenar os proprietários
 	    	    Proprietario[] proprietariosTemporarios = new Proprietario[d.getnProprietarios()];
@@ -318,8 +313,22 @@ public class Main {
 			}
 			
 			public static void listarHospedes() {
-				for(int i = 0; i < d.getnHospedes(); i++) 
-					System.out.println(i + " -> " + d.getHospedes()[i].toString());
+				if (d.getnHospedes() == 0) {
+	    	        System.out.println("Não há hospedes para listar.");
+	    	    }
+				
+	    	    // Cria um array temporário para armazenar os proprietários
+	    	    Hospede[] hospedesTemporarios = new Hospede[d.getnHospedes()];
+
+	    	    for (int i = 0; i < d.getnHospedes(); i++) {
+	    	        hospedesTemporarios[i] = d.getHospedes()[i];
+	    	    }
+
+	    	    // Imprime os proprietários
+	    	    for (Hospede hospede : hospedesTemporarios) {
+	    	        System.out.println(hospede.getNome() + " = Email:" + hospede.getEmail() + ","
+	    	                + " Telefone:" + hospede.getTelefone());
+	    	    }
 			}
 	        
 } // FIM DA MAIN
