@@ -51,19 +51,18 @@ public class Main {
 						removerProprietario();
 						break;
 					case 9:
-						//cadastrarHospede();
+						cadastrarHospede();
 						break;
 					case 10:
-						//removerHospede();
+						removerHospede();
 						break;
 					case 11: 
 						System.out.println("Escolha um dos hospedes a seguir para editar as informacoes:\n");
-						//listarHospedes();
+						listarHospedes();
 						aux = in.nextInt();
-					
 						break;
 					case 12: 
-						//listarHospedes();
+						listarHospedes();
 						break;
 	                default:
 						System.out.println("\nOpcao Invalida!\n");
@@ -90,7 +89,6 @@ public class Main {
 	            saida = saida + "12 - Listar hospedes\n";
 	            return saida;
 	        }
-	        
 	        
 	        public static boolean cadastrarImovel() {
 	            if(d.getnImoveis() < 100) {
@@ -260,9 +258,69 @@ public class Main {
 	    	    }
 	    	}
 	        
+			// Hospede
+			public static boolean cadastrarHospede() {
+				Hospede h = lerDadosHospede();
+				if(d.getnHospedes() < 100) {
+					d.setHospede(d.getnHospedes(), h);
+					d.setnHospedes(d.getnHospedes() + 1);
+					System.out.println("Professor cadastrado com sucesso!\n");
+					return true;
+				} else {
+					System.out.println("Não foi possivel cadastrar o Professor!\n");
+					return false;
+				}
+			}
+			
+			public static Hospede lerDadosHospede() {
+				String nome;
+				String email;  
+				String telefone; 
+				in.nextLine(); //esvazia dados do teclado
 
-	   
-	        
+				System.out.println("Digite o nome do hospede: ");
+				nome = in.nextLine();
+				System.out.println("Digite o email do hospede:");
+				email = in.nextLine();
+				System.out.println("Digite o telefone do hospede:");
+				telefone = in.nextLine();
+
+				Hospede h = new Hospede(nome, email, telefone);
+				return h;	
+			}
+			
+			public static void removerHospede() {
+				System.out.println("Escolha um dos professores a seguir para ser removido:\n");
+				listarHospedes();
+				int i = in.nextInt();
+				if(i < d.getnHospedes() && i > 0) {
+					swapListaHospede(i);
+					d.setHospede(d.getnHospedes(), null);
+					d.setnHospedes(d.getnHospedes() - 1);
+					System.out.println("Professor removido com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}
+			}
+			
+			public static void swapListaHospede(int p) {
+				for(int i = p; i < d.getnHospedes() - 1; i++) 
+					d.setHospede(i, d.getHospede(i+1));
+			}
+			
+			public static void editarHospede(int i, Hospede p) {
+				if(i < d.getnHospedes() && i >= 0) {
+					d.setHospede(i, p);
+					System.out.println("Dados editados com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}
+			}
+			
+			public static void listarHospedes() {
+				for(int i = 0; i < d.getnHospedes(); i++) 
+					System.out.println(i + " -> " + d.getHospedes()[i].toString());
+			}
 	        
 } // FIM DA MAIN
 

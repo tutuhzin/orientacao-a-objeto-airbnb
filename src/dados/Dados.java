@@ -16,7 +16,7 @@ public class Dados {
     private String[] tiposImovel;
     private int nImoveis = 0;
     private int nProprietarios=0;
-    private int nHospede=0;
+    private int nHospedes=0;
 
     // Construtor
     public Dados() {
@@ -100,12 +100,12 @@ public class Dados {
 		hospedes[i] = a;
 	}
 
-    public void setnHospedes(int nHospede) {
-		this.nHospede = nHospede;
+    public void setnHospedes(int nHospedes) {
+		this.nHospedes = nHospedes;
 	}
 
-    public int getnHospede() {
-		return nHospede;
+    public int getnHospedes() {
+		return nHospedes;
 	}
 
     public String[] getNomes() {
@@ -338,9 +338,9 @@ public class Dados {
     }
 
     public void adicionarHospede(Hospede novoHospede) {
-        if (nHospede < hospedes.length) {
-        	hospedes [nHospede] = novoHospede;
-            nHospede++;
+        if (nHospedes < hospedes.length) {
+        	hospedes [nHospedes] = novoHospede;
+            nHospedes++;
             //System.out.println("Hospede adicionado com sucesso!");
         } else {
             //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
