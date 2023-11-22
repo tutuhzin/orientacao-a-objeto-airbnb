@@ -24,7 +24,7 @@ public class Dados {
         proprietarios = new Proprietario [100];  
         hospedes = new Hospede[100];  
         
-        tiposImovel = new String[] {" Casa", " Apartamento", " Chácara", " Chalé", " Pousada", " Kitnet"};
+        tiposImovel = new String[] {"Casa", "Apartamento", "Chácara", "Chalé", "Pousada", "Kitnet"};
 
         nomes = new String [] {
         		" Alan", " Luiza", " Helena", " Beatriz", " Mariana", " Livia", " Ana Clara", " Rafaela", " Yasmin",
@@ -148,6 +148,10 @@ public class Dados {
 		this.proprietarios = proprietarios;
 	}
 
+    public void setProprietario(int i, Proprietario a) {
+		proprietarios[i] = a;
+	}
+
 	public int getnProprietarios() {
 		return nProprietarios;
 	}
@@ -180,14 +184,16 @@ public class Dados {
     }
 
     public String gerarEmail(String nomeCompleto) {
-        String[] partesNome = nomeCompleto.split(" ");
-        if (partesNome.length >= 3) {
+        String[] partesNome = nomeCompleto.trim().split(" ");
+        if (partesNome.length >= 2) {
             String nome = partesNome[0].toLowerCase();
-            String sobrenome = partesNome[1].toLowerCase();
+            String sobrenome = partesNome[partesNome.length - 1].toLowerCase();
             return nome + "." + sobrenome + "@email.com";
         }
         return "";
     }
+
+
 
     public String gerarTelefone() {
         Random random = new Random();
@@ -208,20 +214,18 @@ public class Dados {
     //adicionar Imovel
     public Imovel gerarImovel() {
         Random random = new Random();
-    
-        String descricao = "Imovel numero " + nImoveis;
-        String tipoImovel = getTiposImovel()[random.nextInt(tiposImovel.length)];
-        int qntQuartos = + random.nextInt(5) + 1;
-        int qntCamas = random.nextInt(5) + 1;
-        int qntBanheiros = random.nextInt(3) + 1;
         
-        Imovel novoimovel = new Imovel(descricao, tipoImovel, qntQuartos, qntCamas, qntBanheiros);
-        adicionarImovel(novoimovel);
-     
-        return novoimovel;
-    }
-    
- 
+        String descricao = "Imovel " + nImoveis;
+        String tipoImovel = getTiposImovel()[random.nextInt(tiposImovel.length)];
+        int qntQuartos = random.nextInt(5) + 1;
+        int qntCamas = qntQuartos + random.nextInt(3) + 1;  // Garante que o número de camas seja maior ou igual ao número de quartos
+        int qntBanheiros = random.nextInt(3) + 1;
+            
+        Imovel novoImovel = new Imovel(descricao, tipoImovel, qntQuartos, qntCamas, qntBanheiros);
+        adicionarImovel(novoImovel);
+         
+        return novoImovel;
+    }    
 	
     // Adicionar um objeto imovel no array de imoveis
     public void adicionarImovel(Imovel novoImovel) {
@@ -269,22 +273,8 @@ public class Dados {
         }
         
     }
-   
-    
-    // Vai printar os imoveis já criados e seus atributos
-    public void listarImoveis ()
-    {
-    	for (int i = 0; i < nImoveis; i++) {
-    		
-            System.out.println(imoveis[i].getDescricao() + " = Tipo: " + imoveis[i].getTipoImovel() + ","
-            		+ " Quartos: " + imoveis[i].getQntQuartos() + ","
-            		+ " Camas: " + imoveis[i].getQntCamas() + ","
-            		+ " Banheiros: " + imoveis[i].getQntBanheiros() + ",");
-        }
-    }
 
-    
-    	// PARTE PROPRIETARIO
+    // PARTE PROPRIETARIO
     
     // Adicionar um objeto proprietario no array de proprietarios
     public void adicionarProprietario(Proprietario novoProprietario) {
@@ -345,11 +335,10 @@ public class Dados {
             //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
         }
     }
-    
+
     @Override
     public String toString() {
-        return "Dados [imoveis=" + Arrays.toString(imoveis) + "]";
+        return "Dados [imoveis=" + Arrays.toString(imoveis) + ", proprietarios=" + Arrays.toString(proprietarios)
+                + ", hospedes=" + Arrays.toString(hospedes) + "]";
     }
-
-	
 }

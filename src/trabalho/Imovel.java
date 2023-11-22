@@ -7,6 +7,7 @@ public class Imovel {
     private int qntQuartos;
     private int qntCamas;
     private int qntBanheiros;
+    private Proprietario proprietario;
     
     // Construtor
     public Imovel(String descricao, String tipoImovel, int qntQuartos, int qntCamas, int qntBanheiros) {
@@ -57,12 +58,20 @@ public class Imovel {
     public void setQntBanheiros(int qntBanheiros) {
         this.qntBanheiros = qntBanheiros;
     }
+
+    public Proprietario getProprietario() {
+        return proprietario;
+    }
+
+    public void setProprietario(Proprietario proprietario) {
+        this.proprietario = proprietario;
+    }
     
     // toString
     @Override
     public String toString() {
-        return "Imovel [descricao=" + descricao + ", tipoImovel=" + tipoImovel + ", qntQuartos=" + qntQuartos
-                + ", qntCamas=" + qntCamas + ", qntBanheiros=" + qntBanheiros + "]";
+        return "TipoImovel=" + tipoImovel + ", qntQuartos=" + qntQuartos
+                + ", qntCamas=" + qntCamas + ", qntBanheiros=" + qntBanheiros;
     }
 }
 

@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.util.*;
 import dados.*;
@@ -23,14 +23,15 @@ public class Main {
 						cadastrarImovel ();
 						break;
 					case 2:
-						d.listarImoveis();
+						listarImoveis();
 						break;
 					case 3: 
-						System.out.println("Escolha um dos imoveis a seguir para editar as informacoes:\n");
-						d.listarImoveis();
+						System.out.println("Escolha um dos imóveis a seguir para editar as informações:\n");
+						listarImoveis();
 						aux = in.nextInt();
-						Imovel a = lerDadosImovel();
-						editarImovel(aux, a);
+						Imovel imovelParaEditar = lerDadosImovel();
+						boolean imovelPossuiProprietario = encontrarProprietarioDoImovel(d.getImoveis()[aux]) != null;
+						editarImovel(aux, imovelParaEditar, imovelPossuiProprietario);
 						break;
 					case 4:
 						removerImovel();
@@ -72,7 +73,7 @@ public class Main {
 		}
 
 	        public static String imprimirMenu() {
-	            String saida = new String("Escolha uma das opcoes a seguir:\n");
+	            String saida = new String("\nEscolha uma das opcoes a seguir:\n");
 	            saida = saida + "00 - Sair da aplicacao\n";
 	            saida = saida + "01 - Cadastrar novo imovel\n";
 	            saida = saida + "02 - Listar Imoveis\n";
@@ -125,7 +126,7 @@ public class Main {
 			
 			public static void removerImovel() {
 				System.out.println("Escolha um dos imoveis a seguir para ser removido:\n");
-				d.listarImoveis();
+				listarImoveis();
 				int i = in.nextInt();
 				if(i < d.getnImoveis() && i > 0) {
 					swapListaImoveis(i);
@@ -143,15 +144,77 @@ public class Main {
 					d.setImovel(i, d.getImovel(i+1));
 			}
 			
-			public static void editarImovel(int i, Imovel a) {
-				if(i < d.getnImoveis() && i >= 0) {
-					d.setImovel(i, a);
-					System.out.println("Dados editados com sucesso");
+			public static void editarImovel(int i, Imovel novoImovel, boolean imovelPossuiProprietario) {
+				if (i >= 0 && i < d.getnImoveis()) {
+					Imovel imovelAtual = d.getImoveis()[i];
+			
+					// Preserve o proprietário atual do imóvel
+					Proprietario proprietarioAtual = imovelAtual.getProprietario();
+			
+					// Atribua os novos valores ao imóvel
+					imovelAtual.setDescricao(novoImovel.getDescricao());
+					imovelAtual.setTipoImovel(novoImovel.getTipoImovel());
+					imovelAtual.setQntQuartos(novoImovel.getQntQuartos());
+					imovelAtual.setQntCamas(novoImovel.getQntCamas());
+					imovelAtual.setQntBanheiros(novoImovel.getQntBanheiros());
+			
+					// Se o imóvel original tinha um proprietário, mantenha esse proprietário no novo imóvel
+					if (imovelPossuiProprietario && proprietarioAtual != null) {
+						// Adicione o imóvel atualizado à lista de imóveis do proprietário
+						proprietarioAtual.addImovel(imovelAtual);
+					} else {
+						// Se o imóvel original não tinha um proprietário, defina o novo imóvel como sem proprietário
+						imovelAtual.setProprietario(null);
+					}
+			
+					System.out.println("Imóvel editado com sucesso!");
 				} else {
-					System.out.println("Voce escolheu um numero invalido!");
+					System.out.println("Você escolheu um número de imóvel inválido!");
 				}
 			}
+			
+			
+			
+
+			
 	        
+			public static void listarImoveis() {
+			    if (d.getnImoveis() == 0) {
+			        System.out.println("Não há imóveis para listar.");
+			        return;
+			    }
+			
+			    // Imprime os imóveis com informações do proprietário
+			    for (int i = 0; i < d.getnImoveis(); i++) {
+			        Imovel imovelAtual = d.getImoveis()[i];
+			        Proprietario proprietarioDoImovel = encontrarProprietarioDoImovel(imovelAtual);
+				
+			        if (proprietarioDoImovel != null) {
+			            System.out.println("[" + i + "] " + imovelAtual.getDescricao() + " = Tipo: " + imovelAtual.getTipoImovel() + ","
+			                    + " Quartos: " + imovelAtual.getQntQuartos() + ","
+			                    + " Camas: " + imovelAtual.getQntCamas() + ","
+			                    + " Banheiros: " + imovelAtual.getQntBanheiros() + ","
+			                    + " Proprietário:" + proprietarioDoImovel.getNome());
+			        } else {
+			            System.out.println("[" + i + "] " + imovelAtual.getDescricao() + " = Tipo: " + imovelAtual.getTipoImovel() + ","
+			                    + " Quartos: " + imovelAtual.getQntQuartos() + ","
+			                    + " Camas: " + imovelAtual.getQntCamas() + ","
+			                    + " Banheiros: " + imovelAtual.getQntBanheiros() + ","
+			                    + " Proprietário: Não atribuído");
+			        }
+			    }
+			}
+
+			// Método para encontrar o proprietário de um imóvel
+			public static Proprietario encontrarProprietarioDoImovel(Imovel imovel) {
+			    for (Proprietario proprietario : d.getProprietarios()) {
+			        if (proprietario != null && proprietario.getImoveis().contains(imovel)) {
+			            return proprietario;
+			        }
+			    }
+			    return null;
+			}
+
 	        // Cadastrando um novo proprietario - 05
 	        
 	        
@@ -232,26 +295,18 @@ public class Main {
 	    			d.setnProprietarios(i);
 	    	}
 
-	    	
-	    	
-	    	public static void listarProprietarios() {
-	    	    if (d.getnProprietarios() == 0) {
-	    	        System.out.println("Não há proprietários para listar.");
-	    	    }
+			public static void listarProprietarios() {
+			    if (d.getnProprietarios() == 0) {
+			        System.out.println("Não há proprietários para listar.");
+			    } else {
+			        // Imprime os proprietários com seus índices no array
+			        for (int i = 0; i < d.getnProprietarios(); i++) {
+			            System.out.print("["+ i +"] ");
+			            System.out.println(d.getProprietarios()[i].getNome() + ", Email: " + d.getProprietarios()[i].getEmail() + ", Telefone: " + d.getProprietarios()[i].getTelefone());
+			        }
+			    }
+			}
 
-	    	    // Cria um array temporário para armazenar os proprietários
-	    	    Proprietario[] proprietariosTemporarios = new Proprietario[d.getnProprietarios()];
-
-	    	    for (int i = 0; i < d.getnProprietarios(); i++) {
-	    	        proprietariosTemporarios[i] = d.getProprietarios()[i];
-	    	    }
-
-	    	    // Imprime os proprietários
-	    	    for (Proprietario proprietario : proprietariosTemporarios) {
-	    	        System.out.println(proprietario.getNome() + " = Email:" + proprietario.getEmail() + ","
-	    	                + " Telefone:" + proprietario.getTelefone());
-	    	    }
-	    	}
 	        
 			// Hospede
 			public static boolean cadastrarHospede() {
@@ -281,6 +336,7 @@ public class Main {
 				telefone = in.nextLine();
 
 				Hospede h = new Hospede(nome, email, telefone);
+				d.adicionarHospede(h);
 				return h;	
 			}
 			
@@ -312,26 +368,21 @@ public class Main {
 				}
 			}
 			
+			// Listar os hóspedes mostrando o índice no array hospedes em Dados
 			public static void listarHospedes() {
-				if (d.getnHospedes() == 0) {
-	    	        System.out.println("Não há hospedes para listar.");
-	    	    }
-				
-	    	    // Cria um array temporário para armazenar os proprietários
-	    	    Hospede[] hospedesTemporarios = new Hospede[d.getnHospedes()];
+    			if (d.getnHospedes() == 0) {
+    			    System.out.println("Não há hóspedes para listar.");
+    			} else {
+    			    // Imprime os hóspedes com seus índices no array
+    			    for (int i = 0; i < d.getnHospedes(); i++) {
+    			        System.out.print("[" + i + "] ");
+    			        System.out.println(d.getHospedes()[i].getNome() + ", Email: " + d.getHospedes()[i].getEmail() + ", Telefone: " + d.getHospedes()[i].getTelefone());
+    			    }
+    			}
+}
 
-	    	    for (int i = 0; i < d.getnHospedes(); i++) {
-	    	        hospedesTemporarios[i] = d.getHospedes()[i];
-	    	    }
-
-	    	    // Imprime os proprietários
-	    	    for (Hospede hospede : hospedesTemporarios) {
-	    	        System.out.println(hospede.getNome() + " = Email:" + hospede.getEmail() + ","
-	    	                + " Telefone:" + hospede.getTelefone());
-	    	    }
-			}
 	        
-} // FIM DA MAIN
+}
 
 	        
 	        
