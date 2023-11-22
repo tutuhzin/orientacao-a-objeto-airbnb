@@ -19,23 +19,22 @@ public class Main {
 				 	case 0:
 				 		System.out.println("Obrigado por utilizar o sistema. Ate logo!");
 				 		break;
-				 		
 					case 1:
 						cadastrarImovel ();
 						break;
 					case 2:
 						d.listarImoveis();
-						
 						break;
 					case 3: 
 						System.out.println("Escolha um dos imoveis a seguir para editar as informacoes:\n");
 						d.listarImoveis();
 						aux = in.nextInt();
 						Imovel a = lerDadosImovel();
-						//editar(aux, a);
+						editarImovel(aux, a);
 						break;
 					case 4: 
 						d.listarImoveis();
+						removerImovel();
 						break;
 					case 5:
 						cadastrarProprietario();
@@ -126,6 +125,35 @@ public class Main {
 	            Imovel imovel = new Imovel(descricao, tipoImovel, qntQuartos, qntCamas, qntBanheiros);
 	            return imovel;	
 	        }
+			
+			public static void removerImovel() {
+				System.out.println("Escolha um dos alunos a seguir para ser removido:\n");
+				d.listarImoveis();
+				int i = in.nextInt();
+				if(i < d.getnImoveis() && i > 0) {
+					swapListaImoveis(i);
+					d.setImovel(d.getnImoveis(), null);
+					d.setnImoveis(d.getnImoveis() - 1);
+					System.out.println("Imovel removido com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}
+				
+			}
+			
+			public static void swapListaImoveis(int a) {
+				for(int i = a; i < d.getnImoveis() - 1; i++) 
+					d.setImovel(i, d.getImovel(i+1));
+			}
+			
+			public static void editarImovel(int i, Imovel a) {
+				if(i < d.getnImoveis() && i >= 0) {
+					d.setImovel(i, a);
+					System.out.println("Dados editados com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}
+			}
 	        
 	        // Cadastrando um novo proprietario - 05
 	        
