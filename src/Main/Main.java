@@ -31,12 +31,11 @@ public class Main {
 						System.out.println("Escolha um dos imoveis a seguir para editar as informacoes:\n");
 						d.listarImoveis();
 						aux = in.nextInt();
-						Imovel a  = lerDadosImovel();
-						editarImovel(aux, a);
+						Imovel a = lerDadosImovel();
+						//editar(aux, a);
 						break;
 					case 4: 
 						d.listarImoveis();
-						removerImovel();
 						break;
 					case 5:
 						cadastrarProprietario();
@@ -128,37 +127,10 @@ public class Main {
 	            return imovel;	
 	        }
 	        
-	        // Removendo Imovel
-			public static void removerImovel() {
-				System.out.println("Escolha um dos alunos a seguir para ser removido:\n");
-				d.listarImoveis();
-				int i = in.nextInt();
-				if(i < d.getnImoveis() && i > 0) {
-					swapListaImoveis(i);
-					d.setImovel(d.getnImoveis(), null);
-					d.setnImoveis(d.getnImoveis() - 1);
-					System.out.println("Imovel removido com sucesso");
-				} else {
-					System.out.println("Voce escolheu um numero invalido!");
-				}	
-			}
-
-			public static void swapListaImoveis(int a) {
-				for(int i = a; i < d.getnImoveis() - 1; i++) 
-					d.setImovel(i, d.getImovel(i+1));
-			}
-
-	        public static void editarImovel(int i, Imovel a) {
-				if(i < d.getnImoveis() && i >= 0) {
-					d.setImovel(i, a);
-					System.out.println("Dados editados com sucesso");
-				} else {
-					System.out.println("Voce escolheu um numero invalido!");
-				}
-			}
-
 	        // Cadastrando um novo proprietario - 05
-			public static boolean cadastrarProprietario() {
+	        
+	        
+	        public static boolean cadastrarProprietario() {
 
 	            Proprietario proprietario = lerDadosProprietario();
 
@@ -260,71 +232,10 @@ public class Main {
 	    	    }
 	    	}
 	        
-	    	public static boolean cadastrarHospede() {
-				Hospede a = lerDadosHospede();
-				if(d.getnHospede() < 100) {
-					d.setHospede(d.getnHospede(), a);
-					d.setnHospedes(d.getnHospede()+1);
-					System.out.println("Hospede cadastrado com sucesso!\n");
-					return true;
-				} else {
-					System.out.println("Não foi possivel cadastrar o Hospede!\n");
-					return false;
-				}
-			}
-			
-			public static Hospede lerDadosHospede() {
-				String nome;
-    			String email;
-    			String telefone;
-				in.nextLine(); //esvazia dados do teclado
-				
-				System.out.println("Digite o nome do hospede: ");
-				nome = in.nextLine();
-				System.out.println("Digite o email do hospede:");
-				email = in.nextLine();
-				System.out.println("Digite o telefone do hospede:");
-				telefone = in.nextLine();
 
-				Hospede a = new Hospede(nome, email, telefone);
-				return a;	
-			}
-			
-			public static void removerHospede() {
-				System.out.println("Escolha um dos hospede a seguir para ser removido:\n");
-				listarHospedes();
-				int i = in.nextInt();
-				if(i < d.getnHospede() && i > 0) {
-					swapListaHospede(i);
-					d.setHospede(d.getnHospede(), null);
-					d.setnHospedes(d.getnHospede() - 1);
-					System.out.println("Hospede removido com sucesso");
-				} else {
-					System.out.println("Voce escolheu um numero invalido!");
-				}
-				
-			}
-			
-			public static void swapListaHospede(int a) {
-				for(int i = a; i < d.getnHospede() - 1; i++) 
-					d.setHospede(i, d.getHospede(i+1));
-			}
-			
-			public static void editar(int i, Hospede a) {
-				if(i < d.getnHospede() && i >= 0) {
-					d.setHospede(i, a);
-					System.out.println("Dados editados com sucesso");
-				} else {
-					System.out.println("Voce escolheu um numero invalido!");
-				}
-			}
-			
-			public static void listarHospedes() {
-				in.nextLine(); //esvazia dados do teclado
-				for(int i = 0; i < d.getnHospede(); i++) 
-					System.out.println(i + " -> " + d.getHospedes()[i].toString());
-			}
-      
+	   
+	        
+	        
 } // FIM DA MAIN
 
 	        
