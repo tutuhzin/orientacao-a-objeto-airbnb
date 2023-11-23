@@ -2,7 +2,6 @@ package dados;
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.Scanner;
 
 import trabalho.*;
 
@@ -14,6 +13,8 @@ public class Dados {
     private String[] nomes;
     private String[] sobrenomes;
     private String[] tiposImovel;
+    private String[] cidades;
+    private String[] estados;
     private int nImoveis = 0;
     private int nProprietarios=0;
     private int nHospedes=0;
@@ -65,6 +66,21 @@ public class Dados {
         		" Prado"," Silveira", " Queiroz", " Aguiar", " Siqueira", " Nunes"
 
         };
+
+        estados = new String[] {
+            "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo",
+            "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná",
+            "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia",
+            "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"
+        };
+        
+        cidades = new String[] {
+            "Rio Branco", "Maceió", "Macapá", "Manaus", "Salvador", "Fortaleza", "Brasília", "Vitória",
+            "Goiânia", "São Luís", "Cuiabá", "Campo Grande", "Belo Horizonte", "Belém", "João Pessoa", "Curitiba",
+            "Recife", "Teresina", "Rio de Janeiro", "Natal", "Porto Alegre", "Porto Velho", "Boa Vista",
+            "Florianópolis", "São Paulo", "Aracaju", "Palmas"
+        };
+        
     }
 
     // Getter and Setters
@@ -223,7 +239,7 @@ public class Dados {
         int qntCamas = qntQuartos + random.nextInt(3) + 1;  // Garante que o número de camas seja maior ou igual ao número de quartos
         int qntBanheiros = random.nextInt(3) + 1;
             
-        Imovel novoImovel = new Imovel(descricao, tipoImovel, qntQuartos, qntCamas, qntBanheiros);
+        Imovel novoImovel = new Imovel(descricao, tipoImovel, qntQuartos, qntCamas, qntBanheiros, gerarEndereco());
         adicionarImovel(novoImovel);
          
         return novoImovel;
@@ -236,44 +252,22 @@ public class Dados {
             nImoveis++;
         }
     }
- 
-    
-    // Remover um objeto imovel no array de imoveis
-    public void removerImovel(int j, Scanner in) {
-    	
-        int indiceEncontrado = -1;
 
-        // Procurar o índice do imóvel a ser removido
-        for (int i = 0; i < nImoveis; i++) {
-            if (imoveis[i] != null && i == j) {
-                indiceEncontrado = i;
-                break;
-            }
-        }
+    public Endereco gerarEndereco() {
+        Random random = new Random();
+        int num = random.nextInt(cidades.length);
 
-        // Verificar se o índice foi encontrado
-        if (indiceEncontrado != -1) {
- 
-            System.out.println("Imovel a ser removido:\n" + imoveis[indiceEncontrado].toString());
-            System.out.println("Deseja realmente remover este imovel? (S/N)");
-            String resposta = in.next();
+        String pais = "Brasil";
+        String cidade = cidades[num];
+        String estado = estados[num];
+        String cep = gerarCEP();
 
-            if (resposta.equalsIgnoreCase("S")) {
-                // Remover o imóvel da lista
-                for (int k = indiceEncontrado; k < nImoveis - 1; k++) {
-                    imoveis[k] = imoveis[k + 1];
-                }
-                imoveis[nImoveis - 1] = null;
-                nImoveis--;
+        return new Endereco(pais, cidade, estado, cep);
+    }
 
-                System.out.println("Imovel removido com sucesso.");
-            } else {
-                System.out.println("Remocao cancelada.");
-            }
-        } else {
-            System.out.println("Imovel nao encontrado na lista. Indice invalido.");
-        }
-        
+    public String gerarCEP() {
+        Random random = new Random();
+        return String.format("%05d-000", random.nextInt(100000));
     }
 
     // PARTE PROPRIETARIO

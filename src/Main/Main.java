@@ -94,39 +94,69 @@ public class Main {
 	            return saida;
 	        }
 	        
-	        public static boolean cadastrarImovel() {
-	            if(d.getnImoveis() < 100) {
-	            	d.adicionarImovel(lerDadosImovel());
-	                System.out.println("Imovel cadastrado com sucesso!\n");
-	                return true;
-	            } else {
-	                System.out.println("Nao foi possivel cadastrar o imovel!\n");
-	                return false;
-	            }
-	        }
-
-	        public static Imovel lerDadosImovel() {
-	            String descricao;
-	            String tipoImovel;
-	            int qntQuartos;
-	            int qntCamas;
-	            int qntBanheiros;
-	            in.nextLine(); //esvazia dados do teclado
-
-	            System.out.println("Digite a descricao do imovel: ");
-	            descricao = in.nextLine();
-	            System.out.println("Digite o tipo de imovel:");
-	            tipoImovel = in.nextLine();
-	            System.out.println("Digite a quantidade de quartos:");
-	            qntQuartos = Integer.parseInt(in.nextLine());
-	            System.out.println("Digite a quantidade de camas:");
-	            qntCamas = Integer.parseInt(in.nextLine());
-	            System.out.println("Digite a quantidade de banheiros:");
-	            qntBanheiros = Integer.parseInt(in.nextLine());
-
-	            Imovel imovel = new Imovel(descricao, tipoImovel, qntQuartos, qntCamas, qntBanheiros);
-	            return imovel;	
-	        }
+			public static boolean cadastrarImovel() {
+				if (d.getnImoveis() < 100) {
+					Imovel novoImovel = lerDadosImovel();
+					
+					// Verifica se o novoImovel tem um endereço
+					if (novoImovel.getEndereco() != null) {
+						d.adicionarImovel(novoImovel);
+						System.out.println("Imovel cadastrado com sucesso!\n");
+						return true;
+					} else {
+						System.out.println("Impossível cadastrar o imóvel sem endereço!\n");
+						return false;
+					}
+				} else {
+					System.out.println("Nao foi possivel cadastrar o imovel!\n");
+					return false;
+				}
+			}
+			
+			public static Imovel lerDadosImovel() {
+				String descricao;
+				String tipoImovel;
+				int qntQuartos;
+				int qntCamas;
+				int qntBanheiros;
+			
+				in.nextLine(); // Esvazia dados do teclado
+			
+				System.out.println("Digite a descricao do imovel: ");
+				descricao = in.nextLine();
+				System.out.println("Digite o tipo de imovel:");
+				tipoImovel = in.nextLine();
+				System.out.println("Digite a quantidade de quartos:");
+				qntQuartos = Integer.parseInt(in.nextLine());
+				System.out.println("Digite a quantidade de camas:");
+				qntCamas = Integer.parseInt(in.nextLine());
+				System.out.println("Digite a quantidade de banheiros:");
+				qntBanheiros = Integer.parseInt(in.nextLine());
+			
+				Endereco endereco = lerDadosEndereco();
+			
+				Imovel imovel = new Imovel(descricao, tipoImovel, qntQuartos, qntCamas, qntBanheiros, endereco);
+				return imovel;
+			}
+			
+			public static Endereco lerDadosEndereco() {
+				String pais;
+				String cidade;
+				String estado;
+				String cep;
+			
+				System.out.println("Digite o país do endereço: ");
+				pais = in.nextLine();
+				System.out.println("Digite a cidade do endereço: ");
+				cidade = in.nextLine();
+				System.out.println("Digite o estado do endereço: ");
+				estado = in.nextLine();
+				System.out.println("Digite o CEP do endereço: ");
+				cep = in.nextLine();
+			
+				Endereco endereco = new Endereco(pais, cidade, estado, cep);
+				return endereco;
+			}
 			
 			public static void removerImovel() {
 				System.out.println("Escolha um dos imoveis a seguir para ser removido:\n");
@@ -178,31 +208,26 @@ public class Main {
 			}	
 	        
 			public static void listarImoveis() {
-			    if (d.getnImoveis() == 0) {
-			        System.out.println("Não há imóveis para listar.");
-			        return;
-			    }
+				if (d.getnImoveis() == 0) {
+					System.out.println("Não há imóveis para listar.");
+					return;
+				}
 			
-			    // Imprime os imóveis com informações do proprietário
-			    for (int i = 0; i < d.getnImoveis(); i++) {
-			        Imovel imovelAtual = d.getImoveis()[i];
-			        Proprietario proprietarioDoImovel = encontrarProprietarioDoImovel(imovelAtual);
-				
-			        if (proprietarioDoImovel != null) {
-			            System.out.println("[" + i + "] " + imovelAtual.getDescricao() + " = Tipo: " + imovelAtual.getTipoImovel() + ","
-			                    + " Quartos: " + imovelAtual.getQntQuartos() + ","
-			                    + " Camas: " + imovelAtual.getQntCamas() + ","
-			                    + " Banheiros: " + imovelAtual.getQntBanheiros() + ","
-			                    + " Proprietário:" + proprietarioDoImovel.getNome());
-			        } else {
-			            System.out.println("[" + i + "] " + imovelAtual.getDescricao() + " = Tipo: " + imovelAtual.getTipoImovel() + ","
-			                    + " Quartos: " + imovelAtual.getQntQuartos() + ","
-			                    + " Camas: " + imovelAtual.getQntCamas() + ","
-			                    + " Banheiros: " + imovelAtual.getQntBanheiros() + ","
-			                    + " Proprietário: Não atribuído");
-			        }
-			    }
+				// Imprime os imóveis com informações do proprietário e endereço
+				for (int i = 0; i < d.getnImoveis(); i++) {
+					Imovel imovelAtual = d.getImoveis()[i];
+					Proprietario proprietarioDoImovel = encontrarProprietarioDoImovel(imovelAtual);
+					Endereco enderecoDoImovel = imovelAtual.getEndereco();
+			
+					System.out.println("[" + i + "] " + imovelAtual.getDescricao() + " = Tipo: " + imovelAtual.getTipoImovel() + ","
+							+ " Quartos: " + imovelAtual.getQntQuartos() + ","
+							+ " Camas: " + imovelAtual.getQntCamas() + ","
+							+ " Banheiros: " + imovelAtual.getQntBanheiros() + ","
+							+ " Proprietário: " + (proprietarioDoImovel != null ? proprietarioDoImovel.getNome() : "Não atribuído") + ","
+							+ " Endereço: " + (enderecoDoImovel != null ? enderecoDoImovel.toString() : "Não especificado"));
+				}
 			}
+			
 
 			// Método para encontrar o proprietário de um imóvel
 			public static Proprietario encontrarProprietarioDoImovel(Imovel imovel) {

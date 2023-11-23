@@ -8,14 +8,16 @@ public class Imovel {
     private int qntCamas;
     private int qntBanheiros;
     private Proprietario proprietario;
+    private Endereco endereco;
     
     // Construtor
-    public Imovel(String descricao, String tipoImovel, int qntQuartos, int qntCamas, int qntBanheiros) {
+    public Imovel(String descricao, String tipoImovel, int qntQuartos, int qntCamas, int qntBanheiros, Endereco endereco) {
         this.descricao = descricao;
         this.tipoImovel = tipoImovel;
         this.qntQuartos = qntQuartos;
         this.qntCamas = qntCamas;
         this.qntBanheiros = qntBanheiros;
+        this.endereco = endereco;
     }
 
     // Getters e setters
@@ -67,6 +69,14 @@ public class Imovel {
         this.proprietario = proprietario;
     }
     
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
     // toString
     @Override
     public String toString() {
