@@ -1,12 +1,16 @@
 package main;
 
+import java.text.ParseException;
 import java.util.*;
 import dados.*;
 import trabalho.*;
+import java.text.SimpleDateFormat;
 
 public class Main {
 	private static Dados d = new Dados();
 	private static Scanner in = new Scanner(System.in);
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
 	    public static void main(String[] args) {
 	        int op = -1;
 			int aux = 0;
@@ -68,6 +72,9 @@ public class Main {
 					case 12: 
 						listarHospedes();
 						break;
+					case 13:
+						criarReserva();
+						break;
 	                default:
 						System.out.println("\nOpcao Invalida!\n");
 						break;
@@ -91,6 +98,7 @@ public class Main {
 	            saida = saida + "10 - Remover hospede existente\n";
 	            saida = saida + "11 - Editar hospede existente\n";
 	            saida = saida + "12 - Listar hospedes\n";
+	            saida = saida + "13 - Criar Reserva\n";
 	            return saida;
 	        }
 	        
@@ -329,6 +337,7 @@ public class Main {
 				String nome;
 				String email;  
 				String telefone; 
+				String cartao; 
 				in.nextLine(); //esvazia dados do teclado
 
 				System.out.println("Digite o nome do hospede: ");
@@ -337,8 +346,10 @@ public class Main {
 				email = in.nextLine();
 				System.out.println("Digite o telefone do hospede:");
 				telefone = in.nextLine();
+				System.out.println("Digite a forma de pagamento:");
+				cartao = in.nextLine();
 
-				Hospede h = new Hospede(nome, email, telefone);
+				Hospede h = new Hospede(nome, email, telefone, cartao);
 				return h;	
 			}
 			
@@ -381,7 +392,88 @@ public class Main {
     			        System.out.println(d.getHospedes()[i].getNome() + ", Email: " + d.getHospedes()[i].getEmail() + ", Telefone: " + d.getHospedes()[i].getTelefone());
     			    }
     			}
-}
+			}
+
+			public static void criarReserva() {
+				System.out.println("Criando reserva...");
+				
+				// Listar hóspedes disponíveis para associar à reserva
+				System.out.println("Hóspedes para associar à reserva:");
+				listarHospedes();
+				int escolhaHospede = in.nextInt();
+				if (escolhaHospede < 0 || escolhaHospede >= d.getnHospedes()) {
+					System.out.println("Escolha de hóspede inválida. Reserva cancelada.");
+					return;
+				}
+				Hospede hospedeEscolhido = d.getHospedes()[escolhaHospede];
+				
+				// Listar imóveis disponíveis para associar à reserva
+				System.out.println("Imóvel para reservar:");
+				listarImoveis();
+				int escolhaImovel = in.nextInt();
+				if (escolhaImovel < 0 || escolhaImovel >= d.getnImoveis()) {
+					System.out.println("Escolha de imóvel inválida. Reserva cancelada.");
+					return;
+				}
+				Imovel imovelEscolhido = d.getImoveis()[escolhaImovel];
+				
+				// Solicitar datas para a reserva
+				System.out.println("Digite a data de início da reserva (formato dd/MM/yyyy):");
+				String dataInicio = in.next();
+				System.out.println("Digite a data de fim da reserva (formato dd/MM/yyyy):");
+				String dataFim = in.next();
+				
+				// Solicitar quantidade de hóspedes para a reserva
+				System.out.println("Digite a quantidade de hóspedes para a reserva:");
+				int qntHospedes = in.nextInt();
+				
+				// Calcular o custo da reserva
+				double custoReserva = calcularCusto(dataInicio, dataFim, qntHospedes, imovelEscolhido);
+				
+				// Criar a reserva
+				Reserva novaReserva = new Reserva(hospedeEscolhido, imovelEscolhido, dataInicio, dataFim, qntHospedes, custoReserva); 
+				
+				// Associar a reserva ao hóspede
+				hospedeEscolhido.adicionarReserva(novaReserva);
+				
+				// Marcar o imóvel como não disponível durante o período da reserva
+				imovelEscolhido.setDisponivel(false);
+				
+				System.out.println("Reserva criada com sucesso!");
+				listarReservas();
+			}
+			
+			public static double calcularCusto(String dataIni, String datafim, int qntHospedes, Imovel imovel) {
+				try {
+					Date dataInicio = dateFormat.parse(dataIni);
+					Date dataFim = dateFormat.parse(datafim);
+			
+					long diffEmMillis = Math.abs(dataFim.getTime() - dataInicio.getTime());
+					long diffEmDias = diffEmMillis / (24 * 60 * 60 * 1000);
+			
+					// Ajuste o cálculo do custo para incluir o número de camas do imóvel
+					double custoCalculado = diffEmDias * 100.0 + qntHospedes * 50.0 + imovel.getQntCamas() * 20.0;
+			
+					return custoCalculado;
+				} catch (ParseException e) {
+					System.out.println("Erro ao calcular o custo da reserva.");
+					return 0.0;
+				}
+			}
+					
+
+			public static void listarReservas() {
+			    for (Hospede hospede : d.getHospedes()) {
+			        if (hospede != null && !hospede.getReservas().isEmpty()) {
+			            System.out.println("Reservas de " + hospede.getNome() + ":");
+			            List<Reserva> reservas = hospede.getReservas();
+					
+			            for (Reserva reserva : reservas) {
+			                System.out.println(reserva);
+			            }
+			        }
+			    }
+			}
 
 	        
 }

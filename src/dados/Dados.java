@@ -1,6 +1,7 @@
 package dados;
 
-import java.util.Arrays;
+//import java.util.ArrayList;
+//import java.util.Arrays;
 import java.util.Random;
 
 import trabalho.*;
@@ -317,7 +318,7 @@ public class Dados {
         String nomeCompleto = gerarNome();
         String email = gerarEmail(nomeCompleto);
         String telefoneAleatorio = gerarTelefone();
-        Hospede novoHospede = new Hospede(nomeCompleto, email, telefoneAleatorio);
+        Hospede novoHospede = new Hospede(nomeCompleto, email, telefoneAleatorio, "Cartão");
         adicionarHospede(novoHospede);
         //System.out.println("Hospede adicionado com sucesso!");
     }
@@ -330,11 +331,5 @@ public class Dados {
         } else {
             //System.out.println("A capacidade maxima de anuncios foi atingida. Nao eh possivel adicionar mais imoveis.");
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Dados [imoveis=" + Arrays.toString(imoveis) + ", proprietarios=" + Arrays.toString(proprietarios)
-                + ", hospedes=" + Arrays.toString(hospedes) + "]";
     }
 }

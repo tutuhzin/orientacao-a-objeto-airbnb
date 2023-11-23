@@ -9,6 +9,7 @@ public class Imovel {
     private int qntBanheiros;
     private Proprietario proprietario;
     private Endereco endereco;
+    private boolean disponivel;
     
     // Construtor
     public Imovel(String descricao, String tipoImovel, int qntQuartos, int qntCamas, int qntBanheiros, Endereco endereco) {
@@ -18,6 +19,7 @@ public class Imovel {
         this.qntCamas = qntCamas;
         this.qntBanheiros = qntBanheiros;
         this.endereco = endereco;
+        this.disponivel = false;
     }
 
     // Getters e setters
@@ -77,11 +79,20 @@ public class Imovel {
         this.endereco = endereco;
     }
 
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+
     // toString
     @Override
     public String toString() {
         return "TipoImovel=" + tipoImovel + ", qntQuartos=" + qntQuartos
                 + ", qntCamas=" + qntCamas + ", qntBanheiros=" + qntBanheiros;
     }
+
 }
 

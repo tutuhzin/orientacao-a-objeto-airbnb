@@ -1,28 +1,20 @@
-
 package trabalho;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Hospede extends Usuario {
-	// Atributos
-    private String listaReserva [];
+    // Atributos
+    private List<Reserva> reservas;
     private String infoPagamento;
-    
-    
-    
-    public Hospede (String nome, String email, String telefone) {
+
+    public Hospede(String nome, String email, String telefone, String pagamento) {
         super(nome, email, telefone);
+        this.infoPagamento = pagamento;
+        this.reservas = new ArrayList<>();
     }
 
     // Getters and setters
-    public String[] getListaReserva() {
-        return listaReserva;
-    }
-
-    public void setListaReserva(String[] listaReserva) {
-        this.listaReserva = listaReserva;
-    }
-
     public String getInfoPagamento() {
         return infoPagamento;
     }
@@ -30,18 +22,38 @@ public class Hospede extends Usuario {
     public void setInfoPagamento(String infoPagamento) {
         this.infoPagamento = infoPagamento;
     }
-    
-    // toString
-	@Override
-	public String toString() {
-		return "Hospede [listaReserva=" + Arrays.toString(listaReserva) + ", infoPagamento=" + infoPagamento + "]";
-	}
 
-	 public void criarReserva(String reserva) {
-	        for(int i = 0; i < listaReserva.length;) {
-	        	if(listaReserva[i] == null);
-	        	listaReserva[i] = reserva; // armazena a reserva no primeiro array
-	        	break;
-	        }
-	    }    
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
+    }
+
+    // Método para adicionar uma reserva à lista
+    public void adicionarReserva(Reserva reserva) {
+        reservas.add(reserva);
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        return "Nome=" + getNome() + ", Email=" + getEmail() + ", Telefone=" + getTelefone() + ", infoPagamento=" + infoPagamento;
+    }
+
+    // Adicione um novo método para converter as reservas em String
+    public String reservasToString() {
+        if (reservas == null || reservas.isEmpty()) {
+            return "Sem reservas.";
+        }
+
+        StringBuilder sb = new StringBuilder("Reservas: ");
+        for (Reserva reserva : reservas) {
+            if (reserva != null) {
+                sb.append(reserva.toString()).append(", ");
+            }
+        }
+        return sb.toString();
+    }
 }
