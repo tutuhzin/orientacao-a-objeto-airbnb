@@ -144,6 +144,10 @@ public class Dados {
 		return proprietarios;
 	}
 
+    public Proprietario getProprietario(int i) {
+        return proprietarios[i];
+    }
+
 	public void setProprietarios(Proprietario[] proprietarios) {
 		this.proprietarios = proprietarios;
 	}
@@ -192,8 +196,6 @@ public class Dados {
         }
         return "";
     }
-
-
 
     public String gerarTelefone() {
         Random random = new Random();

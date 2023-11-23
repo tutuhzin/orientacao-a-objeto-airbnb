@@ -46,6 +46,8 @@ public class Main {
 						System.out.println("Escolha um dos proprietarios a seguir para editar as informacoes:\n");
 						listarProprietarios();
 						aux = in.nextInt();
+						Proprietario proprietarioParaEditar = lerDadosProprietario();
+						editarProprietario(aux, proprietarioParaEditar);
 						break;
 					case 8: 
 						removerProprietario();
@@ -60,6 +62,8 @@ public class Main {
 						System.out.println("Escolha um dos hospedes a seguir para editar as informacoes:\n");
 						listarHospedes();
 						aux = in.nextInt();
+						Hospede hospedeParaEditar = lerDadosHospede();
+						editarHospede(aux, hospedeParaEditar);
 						break;
 					case 12: 
 						listarHospedes();
@@ -128,7 +132,7 @@ public class Main {
 				System.out.println("Escolha um dos imoveis a seguir para ser removido:\n");
 				listarImoveis();
 				int i = in.nextInt();
-				if(i < d.getnImoveis() && i > 0) {
+				if(i < d.getnImoveis() && i >= 0) {
 					swapListaImoveis(i);
 					d.setImovel(d.getnImoveis(), null);
 					d.setnImoveis(d.getnImoveis() - 1);
@@ -171,12 +175,7 @@ public class Main {
 				} else {
 					System.out.println("Você escolheu um número de imóvel inválido!");
 				}
-			}
-			
-			
-			
-
-			
+			}	
 	        
 			public static void listarImoveis() {
 			    if (d.getnImoveis() == 0) {
@@ -223,7 +222,6 @@ public class Main {
 	            Proprietario proprietario = lerDadosProprietario();
 
 	            if (d.getnProprietarios() < 100) {
-
 	                d.adicionarProprietario(proprietario);
 	                System.out.println("Proprietario cadastrado com sucesso!\n");
 	                return true;
@@ -248,52 +246,34 @@ public class Main {
 
 	            return proprietario;
 	        }
- 
-	        // Removendo Proprietario - 06
-	        
-	        public static void removerProprietario() {
 
-	            // Apresentar a lista de proprietários
-	            System.out.println("Escolha um dos proprietarios a seguir para ser removido:\n");
-	            listarProprietarios();
+			public static void removerProprietario() {
+				System.out.println("Escolha um dos proprietarios a seguir para ser removido:\n");
+				listarProprietarios();
+				int i = in.nextInt();
+				if(i < d.getnProprietarios() && i >= 0) {
+					swapListaProprietarios(i);
+					d.setProprietario(d.getnProprietarios(), null);
+					d.setnProprietarios(d.getnProprietarios() - 1);
+					System.out.println("Proprietário removido com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}
+			}
+			
+			public static void swapListaProprietarios(int a) {
+				for(int i = a; i < d.getnProprietarios() - 1; i++) 
+					d.setProprietario(i, d.getProprietario(i+1));
+			}
 
-	            // Ler o índice do proprietário a ser removido
-	            int i = in.nextInt();
-
-	            // Verificar se o proprietário existe
-	            boolean proprietarioExiste = false;
-	            for (int j = 0; j < d.getnProprietarios(); j++) {
-	                if (i == j) {
-	                    proprietarioExiste = true;
-	                    break;
-	                }
-	            }
-
-	            // Verificar se o índice é válido
-	            if (proprietarioExiste && i < d.getnProprietarios() && i > 0) {
-
-	                // Remover o proprietário da lista
-	                Proprietario proprietarioRemovido = d.getProprietarios()[i];
-	                swapListaProprietarios(i);
-	                d.setnProprietarios(d.getnProprietarios() - 1);
-
-	                // Exibir uma mensagem de confirmação
-	                System.out.println("Proprietario removido com sucesso: " + proprietarioRemovido.getNome());
-	            } else {
-
-	                // Exibir uma mensagem de erro
-	                if (!proprietarioExiste) {
-	                    System.out.println("O proprietario selecionado não existe!");
-	                } else {
-	                    System.out.println("Você escolheu um número invalido!");
-	                }
-	            }
-	        }
-	        
-	    	public static void swapListaProprietarios(int p) {
-	    		for(int i = p; i < d.getnProprietarios() - 1; i++) 
-	    			d.setnProprietarios(i);
-	    	}
+			public static void editarProprietario(int i, Proprietario p) {
+				if(i < d.getnProprietarios() && i >= 0) {
+					d.setProprietario(i, p);
+					System.out.println("Dados editados com sucesso");
+				} else {
+					System.out.println("Voce escolheu um numero invalido!");
+				}
+			}
 
 			public static void listarProprietarios() {
 			    if (d.getnProprietarios() == 0) {
@@ -308,16 +288,14 @@ public class Main {
 			}
 
 	        
-			// Hospede
+			// Hospedes
 			public static boolean cadastrarHospede() {
-				Hospede h = lerDadosHospede();
 				if(d.getnHospedes() < 100) {
-					d.setHospede(d.getnHospedes(), h);
-					d.setnHospedes(d.getnHospedes() + 1);
-					System.out.println("Professor cadastrado com sucesso!\n");
+					d.adicionarHospede(lerDadosHospede());
+					System.out.println("Hospede cadastrado com sucesso!\n");
 					return true;
 				} else {
-					System.out.println("Não foi possivel cadastrar o Professor!\n");
+					System.out.println("Não foi possivel cadastrar o hospede!\n");
 					return false;
 				}
 			}
@@ -336,19 +314,18 @@ public class Main {
 				telefone = in.nextLine();
 
 				Hospede h = new Hospede(nome, email, telefone);
-				d.adicionarHospede(h);
 				return h;	
 			}
 			
 			public static void removerHospede() {
-				System.out.println("Escolha um dos professores a seguir para ser removido:\n");
+				System.out.println("\nEscolha um dos hospedes a seguir para ser removido:\n");
 				listarHospedes();
 				int i = in.nextInt();
-				if(i < d.getnHospedes() && i > 0) {
+				if(i < d.getnHospedes() && i >= 0) {
 					swapListaHospede(i);
 					d.setHospede(d.getnHospedes(), null);
 					d.setnHospedes(d.getnHospedes() - 1);
-					System.out.println("Professor removido com sucesso");
+					System.out.println("Hospede removido com sucesso");
 				} else {
 					System.out.println("Voce escolheu um numero invalido!");
 				}
@@ -359,9 +336,9 @@ public class Main {
 					d.setHospede(i, d.getHospede(i+1));
 			}
 			
-			public static void editarHospede(int i, Hospede p) {
+			public static void editarHospede(int i, Hospede h) {
 				if(i < d.getnHospedes() && i >= 0) {
-					d.setHospede(i, p);
+					d.setHospede(i, h);
 					System.out.println("Dados editados com sucesso");
 				} else {
 					System.out.println("Voce escolheu um numero invalido!");
